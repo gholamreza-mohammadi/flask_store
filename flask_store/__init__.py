@@ -30,4 +30,21 @@ def create_app(test_config=None):
     def hello():
         return "Hello, World!"
 
+    # # register the database commands
+    # from flasflask_storekr import db
+    #
+    # db.init_app(app)
+    #
+    # # apply the blueprints to the app
+    # from flask_store import auth, blog
+    #
+    # app.register_blueprint(auth.bp)
+    # app.register_blueprint(blog.bp)
+    #
+    # # make url_for('index') == url_for('blog.index')
+    # # in another app, you might define a separate main index here with
+    # # app.route, while giving the blog blueprint a url_prefix, but for
+    # # the tutorial the blog will be the main index
+    # app.add_url_rule("/", endpoint="index")
+
     return app
