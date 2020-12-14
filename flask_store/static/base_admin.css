@@ -1,0 +1,29 @@
+body{
+    font-size: 1.5rem;
+}
+
+.head{
+    display: flex;
+    width: fit-content;
+    margin: auto
+}
+.head > *{
+    margin-top: 20px;
+    margin-left: 30px;
+}
+.menu{
+    display: flex;
+    box-shadow: 5px 5px 2px black;
+    height: fit-content;
+}
+
+.menu > a{
+    border: solid black;
+    padding: 5px 10px 5px 10px;
+    height: fit-content;
+   text-decoration: none;
+}
+.back{
+   text-decoration: none;
+   margin-top: 30px;
+}
