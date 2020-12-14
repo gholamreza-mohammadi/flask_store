@@ -19,6 +19,6 @@ def login():
             for user in users:
                 if username == user[0] and password == user[1]:
                     return redirect(url_for("hello"))
-            return render_template("login.html", error="incorect user or pass")
+            return render_template("admin_panel/login.html", error="incorect username or password")
     else:
-        return render_template("login.html", error="")
+        return render_template("admin_panel/login.html", error=None)

@@ -27,7 +27,9 @@
 
     </form>
     {% if error %}
-    <span>Error: {{ error }}</span>
+    <script>
+        alert("{{ error }}");
+    </script>
     {% endif %}
 </div>
 </body>
