@@ -8,27 +8,29 @@
 </head>
 <body>
 
-    <div class="continer">
-        <form method="post">
+<div class="continer">
+    <form method="post">
         <h2>ورود به پنل مدیریت فروشگاه</h2>
         <div class="imgcontainer">
             <img src="../static/img_avatar2.png" alt="Avatar" class="avatar">
         </div>
-        
+
         <div class="container">
-            <label for="uname"><b>نام کاربری:</b></label>
+            <label><b>نام کاربری:</b></label>
             <input type="text" placeholder="نام کاربری وارد کنید" name="username" required>
-        
-            <label for="psw"><b>رمز عبور:</b></label>
+
+            <label><b>رمز عبور:</b></label>
             <input type="password" placeholder="رمز عبور وارد کنید" name="password" required>
-                
+
             <button type="submit">ورود</button>
         </div>
-        
-        </form>
-        {% if error %}
-        <span>Error: {{ error }}</span>
-        {% endif %}
-    </div>
-    </body>
-    </html>
+
+    </form>
+    {% if error %}
+    <script>
+        alert("{{ error }}");
+    </script>
+    {% endif %}
+</div>
+</body>
+</html>
