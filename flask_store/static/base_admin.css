@@ -1,29 +1,36 @@
-body{
-    font-size: 1.5rem;
+body {
+    font-size: 1.0em;
 }
 
-.head{
+.head {
     display: flex;
+    justify-content: space-around;
     width: fit-content;
     margin: auto
 }
-.head > *{
+
+.head > * {
     margin-top: 20px;
     margin-left: 30px;
 }
-.menu{
+
+.menu {
     display: flex;
     box-shadow: 5px 5px 2px black;
     height: fit-content;
+    background-color: gray;
 }
 
-.menu > a{
-    border: solid black;
-    padding: 5px 10px 5px 10px;
+.menu > a {
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin: 0 10px;
     height: fit-content;
-   text-decoration: none;
+    text-decoration: none;
 }
-.back{
+
+.back {
    text-decoration: none;
    margin-top: 30px;
 }

@@ -5,6 +5,7 @@ from flask import render_template
 from flask import current_app
 from flask import url_for
 from flask import redirect
+from flask import session
 from cryptography.fernet import Fernet
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
@@ -19,9 +20,15 @@ def login():
             users = json.load(user_file)
             cipher_suite = Fernet(current_app.config['CIPHER_KEY'])
             for user in users:
-                unciphered_pass = (cipher_suite.decrypt(bytes(user[1],'utf-8'))).decode("utf-8")
+                unciphered_pass = (cipher_suite.decrypt(bytes(user[1], 'utf-8'))).decode("utf-8")
                 if username == user[0] and password == unciphered_pass:
-                    return redirect(url_for("hello"))
+                    session['username'] = username
+                    return redirect(url_for("admin.product"), code=307)
             return render_template("admin_panel/login.html", error="incorect username or password")
     else:
         return render_template("admin_panel/login.html", error=None)
+
+
+@bp.route("/product", methods=["POST"])
+def product():
+    return render_template("admin_panel/product.html", username=session['username'])
