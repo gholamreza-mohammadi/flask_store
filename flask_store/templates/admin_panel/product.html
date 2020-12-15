@@ -1,8 +1,37 @@
 {% extends "admin_panel/base_admin.html" %}
 
 {% block body %}
-{{ username }}
-{{ username }}
-{{ username }}
-{{ username }}
+<table>
+    <tr>
+        <th>
+            تصویر
+        </th>
+        <th>
+            نام کالا
+        </th>
+        <th>
+            دسته بندی
+        </th>
+        <th>
+            ویرایش یا حذف
+        </th>
+    </tr>
+    {% for product in products %}
+    <tr>
+        <td>
+            <a href="{{ product[0] }}">link</a>
+        </td>
+        <td>
+            {{ product[1] }}
+        </td>
+        <td>
+            {{ product[2] }}
+        </td>
+        <td>
+            <a href="#">ویرایش</a>
+            <a href="#">حذف</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

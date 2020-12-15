@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}">
     <title>Login</title>
 </head>
 <body>
@@ -12,7 +12,7 @@
         <h2>ورود به پنل مدیریت فروشگاه</h2>
 
         <div class="imgcontainer">
-            <img src="../../static/img_avatar2.png" alt="Avatar" class="avatar">
+            <img src="{{ url_for('static', filename='img_avatar2.png') }}" alt="Avatar" class="avatar">
         </div>
 
         <div class="container">
