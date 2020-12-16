@@ -1,12 +1,13 @@
 table {
-    width:90%;
+    min-width:40%;
     border-collapse: collapse;
     border: 2px solid black;
     margin: auto;
     }
     th, td {
     border-left: 2px solid black;
-    padding: 3px;
+    padding: 5px 5px 5px 15px;
+    word-wrap: normal;
     }
     
     tr:nth-child(even) {
@@ -14,6 +15,9 @@ table {
     }
     tr:nth-child(odd) {
     background-color: #fff;
+    }
+    td:last-child {
+    text-align: center;
     }
     th {
     background-color: gray;
