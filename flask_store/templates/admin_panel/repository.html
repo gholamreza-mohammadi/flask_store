@@ -1,2 +1,25 @@
-{% extends "base_admin.html" %}
+{% extends "admin_panel/base_admin.html" %}
 
+{% block body %}
+<table>
+    <tr>
+        <th>
+            نام انبار
+        </th>
+        <th>
+            ویرایش یا حذف
+        </th>
+    </tr>
+    {% for repository in repositorys %}
+    <tr>
+        <td>
+            {{ repository }}
+        </td>
+        <td>
+            <a href="#">ویرایش</a>
+            <a href="#">حذف</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
