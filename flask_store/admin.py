@@ -29,7 +29,7 @@ def login():
         return render_template("admin_panel/login.html", error=None)
 
 
-@bp.route("/product", methods=["POST","GET"])
+@bp.route("/product", methods=["POST", "GET"])
 def product():
     products = [
         ("https://www.ibiar.com/images/6261107003705-256.jpg",
@@ -50,10 +50,11 @@ def product():
     ]
     return render_template("admin_panel/product.html", products=products)
 
+
 @bp.route("/repository")
 def repository():
     repositorys = [("انبار شماره 1"),
                    ("انبار شماره2"),
-                   ("انبار شماره3") 
-    ]
-    return render_template("admin_panel/repository.html",repositorys=repositorys)
+                   ("انبار شماره3")
+                   ]
+    return render_template("admin_panel/repository.html", repositorys=repositorys)

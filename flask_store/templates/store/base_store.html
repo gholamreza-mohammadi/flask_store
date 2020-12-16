@@ -7,18 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="head">
-        <div class="title">
-            <img src="{{ url_for('static', filename='img_store.png') }}" alt="" class="icon">
-            <h1>فروشگاه فلان</h1>
-        </div>
-        
-        <div class="menu">
-            <a href="{{ url_for('admin.login') }}">مدیریت</a>
-            <a href="">سبد خرید</a>
-        </div>
+<div class="head">
+    <div class="title">
+        <img src="{{ url_for('static', filename='img_store.png') }}" alt="" class="icon">
+        <h1>فروشگاه فلان</h1>
     </div>
-    <hr>
-    
+    <div class="menu">
+        <a href="{{ url_for('admin.login') }}">مدیریت</a>
+        <a href="">سبد خرید</a>
+    </div>
+</div>
+<hr>
 </body>
 </html>
