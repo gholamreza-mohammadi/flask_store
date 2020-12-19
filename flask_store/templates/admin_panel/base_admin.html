@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css_folder/admin_panel/base_admin.css') }}">
-    {% block head %} {% endblock %}
+<!--    {% block head %} {% endblock %}-->
     <title>پنل مدیریت فروشگاه</title>
 </head>
 <body>
@@ -19,6 +19,13 @@
     <a href="{{ url_for('home') }}" class="back">بازگشت به سایت</a>
 </div>
 <hr>
-{% block body %} {% endblock %}
+<!--{% block body %} {% endblock %}-->
+<div id="data_div">
+    <p>TTT</p>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js_folder/admin_panel/base_admin.js') }}"></script>
 </body>
 </html>

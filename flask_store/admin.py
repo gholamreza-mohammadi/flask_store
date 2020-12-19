@@ -30,6 +30,31 @@ def login():
         return render_template("admin_panel/login.html", error=None)
 
 
+@bp.route("/product-api", methods=["POST", "GET"])
+def get_products():
+    if request.method == "POST":
+        products = [
+            {"name": "لوبیا قرمز 900 گرمی گلستان",
+             "img_link": "https://www.ibiar.com/images/6261107003705-256.jpg",
+             "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
+            {"name": "روغن مخصوص سرخ کردنی بدون پالم 2000 میلی لیتری اویلا",
+             "img_link": "https://onemarketco.ir/wp-content/uploads/8083FA0D-46D9-4EC1-B53C-3DD7E7365400.jpeg",
+             "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
+            {"name": "روغن مایع آفتابگردان ویتامینه 1800 میلی لیتری غنچه",
+             "img_link": "https://onemarketco.ir/wp-content/uploads/6EDDF87E-A388-4965-906D-3B63270AB958.jpeg",
+             "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
+            {"name": "کره سنتی ۱۰۰ گرمی شکلی",
+             "img_link": "https://www.ibiar.com/images/6260063200845-256.jpg",
+             "category": "مواد غذایی / لبنیات"},
+            {"name": "پودر قهوه دم کردنی اسپرسو 250 گرمی لاواتزا",
+             "img_link": "https://www.ibiar.com/images/8000070018686-256.jpg",
+             "category": "مواد غذایی / نوشیدنی"}
+        ]
+        return json.dumps(products, ensure_ascii=False).encode('utf-8')
+    else:
+        abort(404)
+
+
 @bp.route("/product", methods=["POST", "GET"])
 def product():
     if request.method == "POST":
