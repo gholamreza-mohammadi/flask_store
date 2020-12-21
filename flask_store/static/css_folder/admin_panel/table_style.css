@@ -1,21 +1,30 @@
 table {
-    width:90%;
+    width: 90vw;
     border-collapse: collapse;
     border: 2px solid black;
     margin: auto;
-    }
-    th, td {
+}
+
+th,
+td {
     border-left: 2px solid black;
     padding: 3px;
-    }
-    
-    tr:nth-child(even) {
+}
+
+tr {
+    vertical-align: middle;
+    text-align: center;
+}
+
+tr:nth-child(even) {
     background-color: #eee;
-    }
-    tr:nth-child(odd) {
+}
+
+tr:nth-child(odd) {
     background-color: #fff;
-    }
-    th {
+}
+
+th {
     background-color: gray;
     color: white;
-    }
+}
