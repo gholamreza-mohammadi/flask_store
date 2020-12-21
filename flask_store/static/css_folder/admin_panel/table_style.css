@@ -28,3 +28,7 @@ th {
     background-color: gray;
     color: white;
 }
+
+table.repositories_table {
+    width: 40vw;
+}
