@@ -69,7 +69,36 @@ def get_orders():
         abort(404)
 
 
-@bp.route("/inventory-api", methods=["POST", "GET"])
+@bp.route("/set-inventory", methods=["POST", "GET"])
+def set_inventories():
+    if request.method == "POST":
+        data = request.get_json()
+        if 'add_inventory' in data:
+            current_app.logger.debug('add_inventory')
+            current_app.logger.debug(data['inventory_repository'])
+            current_app.logger.debug(data['inventory_product'])
+            current_app.logger.debug(data['inventory_price'])
+            current_app.logger.debug(data['inventory_quantity'])
+            return 'add_repository'
+        elif 'edit_inventory' in data:
+            current_app.logger.debug('edit_inventory')
+            current_app.logger.debug(data['inventory_id'])
+            current_app.logger.debug(data['inventory_repository'])
+            current_app.logger.debug(data['inventory_product'])
+            current_app.logger.debug(data['inventory_price'])
+            current_app.logger.debug(data['inventory_quantity'])
+            return 'edit_inventory'
+        elif 'delete_inventory' in data:
+            current_app.logger.debug('delete_inventory')
+            current_app.logger.debug(data['inventory_id'])
+            return 'delete_inventory'
+        else:
+            return 'invalid request'
+    else:
+        abort(404)
+
+
+@bp.route("/get-inventory", methods=["POST", "GET"])
 def get_inventories():
     if request.method == "POST":
         inventories = {"column_names": ["id", "repository_name", "commodity_name", "price", "quantity"],
@@ -105,7 +134,30 @@ def get_inventories():
         abort(404)
 
 
-@bp.route("/repository-api", methods=["POST", "GET"])
+@bp.route("/set-repository", methods=["POST", "GET"])
+def set_repositories():
+    if request.method == "POST":
+        data = request.get_json()
+        if 'add_repository' in data:
+            current_app.logger.debug('add_repository')
+            current_app.logger.debug(data['repository_name'])
+            return 'add_repository'
+        elif 'edit_repository' in data:
+            current_app.logger.debug('edit_repository')
+            current_app.logger.debug(data['repository_id'])
+            current_app.logger.debug(data['repository_name'])
+            return 'edit_repository'
+        elif 'delete_repository' in data:
+            current_app.logger.debug('delete_repository')
+            current_app.logger.debug(data['repository_id'])
+            return 'delete_repository'
+        else:
+            return 'invalid request'
+    else:
+        abort(404)
+
+
+@bp.route("/get-repository", methods=["POST", "GET"])
 def get_repositories():
     if request.method == "POST":
         repositories = {"column_names": ["id", "repository_name"],
@@ -119,7 +171,7 @@ def get_repositories():
         abort(404)
 
 
-@bp.route("/category-api", methods=["POST", "GET"])
+@bp.route("/get-category", methods=["POST", "GET"])
 def get_categories():
     if request.method == "POST":
         categories = {'data': [
