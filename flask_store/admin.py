@@ -244,36 +244,3 @@ def get_products():
         return products
     else:
         abort(404)
-
-
-@bp.route("/product", methods=["POST", "GET"])
-def product():
-    if request.method == "POST":
-        products = [
-            ("https://www.ibiar.com/images/6261107003705-256.jpg",
-             "لوبیا قرمز 900 گرمی گلستان",
-             "مواد غذایی / کالاهای اساسی و خوار و بار"),
-            ("https://onemarketco.ir/wp-content/uploads/8083FA0D-46D9-4EC1-B53C-3DD7E7365400.jpeg",
-             "روغن مخصوص سرخ کردنی بدون پالم 2000 میلی لیتری اویلا",
-             "مواد غذایی / کالاهای اساسی و خوار و بار"),
-            ("https://onemarketco.ir/wp-content/uploads/6EDDF87E-A388-4965-906D-3B63270AB958.jpeg",
-             "روغن مایع آفتابگردان ویتامینه 1800 میلی لیتری غنچه",
-             "مواد غذایی / کالاهای اساسی و خوار و بار"),
-            ("https://www.ibiar.com/images/6260063200845-256.jpg",
-             "کره سنتی ۱۰۰ گرمی شکلی",
-             "مواد غذایی / لبنیات"),
-            ("https://www.ibiar.com/images/8000070018686-256.jpg",
-             "پودر قهوه دم کردنی اسپرسو 250 گرمی لاواتزا",
-             "مواد غذایی / نوشیدنی")
-        ]
-        return render_template("admin_panel/product.html", products=products)
-    else:
-        abort(404)
-
-
-@bp.route("/repository")
-def repository():
-    repositorys = [("انبار شماره 1"),
-                   ("انبار شماره 2"),
-                   ("انبار شماره 3")]
-    return render_template("admin_panel/repository.html", repositorys=repositorys)

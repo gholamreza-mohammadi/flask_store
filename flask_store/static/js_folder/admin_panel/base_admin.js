@@ -535,7 +535,7 @@ $(function () {
                     table += "<td>" + element[column_names[1]] + "</td>";
                     table += "<td>" + element[column_names[2]] + "</td>";
                     table += "<td>" + element[column_names[3]] + "</td>";
-                    table += '<td><a href="" class="order_detail" id="order_detail_' + element[column_names[0]] + '">بررسی سفارش</a></td>';
+                    table += '<td><a href="#" class="order_detail" id="order_detail_' + element[column_names[0]] + '">بررسی سفارش</a></td>';
                     orders_obj['order_detail_' + element[column_names[0]]] = element[column_names[0]];
                     table += "</tr>";
                 });
