@@ -135,28 +135,30 @@ def get_categories():
 @bp.route("/set-product", methods=["POST", "GET"])
 def set_products():
     if request.method == "POST":
-        data = request.get_json()
-        if 'delete_product' in data:
-            current_app.logger.debug('delete_product')
-            current_app.logger.debug(data['product_id'])
-            return 'delete_product'
-        elif 'edit_product' in data:
-            current_app.logger.debug('edit_product')
-            current_app.logger.debug(data['product_id'])
-            current_app.logger.debug(data['product_name'])
-            current_app.logger.debug(data['product_category'])
-            return 'edit_product'
-        elif 'add_product' in data:
-            current_app.logger.debug('add_product')
-            current_app.logger.debug(data['product_name'])
-            current_app.logger.debug(data['product_category'])
-            return 'add_product'
-        elif 'add_products' in data:
-            current_app.logger.debug('add_products')
-            # incomplete
+        file = request.files.get('products_file')
+        if file:
+            # current_app.logger.debug(file.read())
+            current_app.logger.debug(file)
             return 'add_products'
         else:
-            return 'invalid request'
+            data = request.get_json()
+            if 'delete_product' in data:
+                current_app.logger.debug('delete_product')
+                current_app.logger.debug(data['product_id'])
+                return 'delete_product'
+            elif 'edit_product' in data:
+                current_app.logger.debug('edit_product')
+                current_app.logger.debug(data['product_id'])
+                current_app.logger.debug(data['product_name'])
+                current_app.logger.debug(data['product_category'])
+                return 'edit_product'
+            elif 'add_product' in data:
+                current_app.logger.debug('add_product')
+                current_app.logger.debug(data['product_name'])
+                current_app.logger.debug(data['product_category'])
+                return 'add_product'
+            else:
+                return 'invalid request'
     else:
         abort(404)
 

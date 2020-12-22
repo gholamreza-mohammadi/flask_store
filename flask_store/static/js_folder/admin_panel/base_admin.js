@@ -96,13 +96,32 @@ $(function () {
                     event.preventDefault();
                     var popup = '<div class="popup">';
                     popup += "<h2>آپلود فایل جدول کالا</h2>";
-                    popup += "<h4>انتخاب فایل:</h4>";
+                    popup += "<h4>انتخاب فایل.......:</h4>";
+                    // popup += '<div dir="ltr"><input dir="ltr" id="products_file" name="products_file" type="file"></div>';
+                    // popup += '<div class="container"><a href="" class="btn_a" id="save_products_btn">آپلود و ذخیره‌سازی جدول</a></div>';
+                    popup += '<form method="POST" enctype="multipart/form-data" id="fileUploadForm">';
                     popup += '<div dir="ltr"><input dir="ltr" id="products_file" name="products_file" type="file"></div>';
-                    popup += '<div class="container"><a href="#" class="btn_a" id="save_products_btn">آپلود و ذخیره‌سازی جدول</a></div>';
+                    popup += '<div class="container"><button type="submit">آپلود و ذخیره‌سازی جدول</button></div></form>';
                     popup += "</div>";
 
                     $("div#popup_div").append(popup);
                     $("div.popup").lightbox_me();
+
+                    $('button[type=submit]').click(function (event) {
+                        event.preventDefault();
+                        if ($('input#products_file').val().length) {
+                            $.ajax({
+                                type: 'POST',
+                                enctype: 'multipart/form-data',
+                                url: 'set-product',
+                                data: new FormData($('#fileUploadForm')[0]),
+                                processData: false,
+                                contentType: false,
+                                cache: false
+                            });
+                            $("div.popup").trigger('close');
+                        }
+                    });
                 });
 
                 $("a.edit_product").click(function (event) {
