@@ -17,7 +17,7 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        with open("flask_store/users.json") as user_file:
+        with open('flask_store/static/json_folder/users.json') as user_file:
             users = json.load(user_file)
             cipher_suite = Fernet(current_app.config['CIPHER_KEY'])
             for user in users:
