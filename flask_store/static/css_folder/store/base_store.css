@@ -1,12 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
+    width: 80vw;
+    margin: 1vw auto;
     direction: rtl;
     font-family: "Calibri";
 }
 
-div.head {
+header {
     display: flex;
     justify-content: space-between;
 }
+
 div.title {
     display: flex;
 }
@@ -15,16 +22,33 @@ img.icon {
     width: 60px;
 }
 
-div.head h1 {
+header h1 {
     margin: auto 10px;
 }
 
 div.menu > a {
-    margin: 20px ;
+    margin: 20px;
     font-size: 20px;
     text-decoration: none;
 }
 
 div.menu {
-    margin: 20px ;
+    margin: 20px;
+}
+
+main {
+    display: flex;
+}
+
+div#left_div, div#right_div {
+  min-width: 0;
+  height: 100vh;
+}
+
+div#main_div {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  /*   align-items: center; */
+  overflow: auto;
 }
