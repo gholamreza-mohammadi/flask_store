@@ -1,9 +1,5 @@
 table {
-<<<<<<< HEAD:flask_store/static/table_style.css
-    min-width:40%;
-=======
     width: 90vw;
->>>>>>> ghanbari/master:flask_store/static/css_folder/admin_panel/table_style.css
     border-collapse: collapse;
     border: 2px solid black;
     margin: auto;
@@ -12,13 +8,6 @@ table {
 th,
 td {
     border-left: 2px solid black;
-<<<<<<< HEAD:flask_store/static/table_style.css
-    padding: 5px 5px 5px 15px;
-    word-wrap: normal;
-    }
-    
-    tr:nth-child(even) {
-=======
     padding: 3px;
 }
 
@@ -28,23 +17,14 @@ tr {
 }
 
 tr:nth-child(even) {
->>>>>>> ghanbari/master:flask_store/static/css_folder/admin_panel/table_style.css
     background-color: #eee;
 }
 
 tr:nth-child(odd) {
     background-color: #fff;
-<<<<<<< HEAD:flask_store/static/table_style.css
-    }
-    td:last-child {
-    text-align: center;
-    }
-    th {
-=======
 }
 
 th {
->>>>>>> ghanbari/master:flask_store/static/css_folder/admin_panel/table_style.css
     background-color: gray;
     color: white;
 }
