@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='base_store.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css_folder/store/base_store.css') }}">
     <title>Document</title>
 </head>
 <body>
-    <div class="head">
-        <div class="title">
-            <img src="{{ url_for('static', filename='img_store.png') }}" alt="" class="icon">
-            <h1>فروشگاه فلان</h1>
-        </div>
-        
-        <div class="menu">
-            <a href="{{ url_for('admin.login') }}">مدیریت</a>
-            <a href="">سبد خرید</a>
-        </div>
+<div class="head">
+    <div class="title">
+        <img src="{{ url_for('static', filename='assets/images/store.png') }}" alt="" class="icon">
+        <h1>فروشگاه فلان</h1>
     </div>
-    <hr>
-    
+    <div class="menu">
+        <a href="{{ url_for('admin.login') }}">مدیریت</a>
+        <a href="">سبد خرید</a>
+    </div>
+</div>
+<hr>
 </body>
 </html>

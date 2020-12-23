@@ -1,20 +1,21 @@
-
-body{
+body {
     direction: rtl;
     font-family: "Calibri";
 }
+
 div.head {
     display: flex;
     justify-content: space-between;
 }
-div.title{
+div.title {
     display: flex;
 }
-img.icon{
+
+img.icon {
     width: 60px;
 }
 
-.head h1{
+div.head h1 {
     margin: auto 10px;
 }
 
@@ -23,6 +24,7 @@ div.menu > a {
     font-size: 20px;
     text-decoration: none;
 }
-div.menu{
+
+div.menu {
     margin: 20px ;
 }

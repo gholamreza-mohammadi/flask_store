@@ -3,22 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='base_admin.css') }}">
-    {% block head %} {% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css_folder/admin_panel/base_admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css_folder/admin_panel/table_style.css') }}">
+    <!--    {% block head %} {% endblock %}-->
     <title>پنل مدیریت فروشگاه</title>
 </head>
 <body>
 <div class="head">
     <h2>پنل مدیریت فروشگاه</h2>
     <div class="menu">
-        <a href="{{ url_for('admin.product') }}">کالاها</a>
-        <a href="{{ url_for('admin.repository') }}">انبار ها</a>
-        <a href="{{ url_for('hello') }}">موجودی و قیمت</a>
-        <a href="{{ url_for('hello') }}">سفارش ها</a>
+        <a href="" id="product">کالاها</a>
+        <a href="" id="repository">انبار ها</a>
+        <a href="" id="inventory">موجودی و قیمت</a>
+        <a href="" id="order">سفارش ها</a>
     </div>
     <a href="{{ url_for('home') }}" class="back">بازگشت به سایت</a>
 </div>
 <hr>
-{% block body %} {% endblock %}
+<!--{% block body %} {% endblock %}-->
+<div id="header_div"></div>
+<div id="table_div"></div>
+<div id="popup_div"></div>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"-->
+<!--        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="-->
+<!--        crossorigin="anonymous"></script>-->
+<script src="{{ url_for('static', filename='js_folder/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='js_folder/jquery.lightbox_me.js') }}"></script>
+<script src="{{ url_for('static', filename='js_folder/admin_panel/base_admin.js') }}"></script>
 </body>
 </html>
