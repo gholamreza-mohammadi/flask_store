@@ -222,29 +222,35 @@ def set_products():
 def get_products():
 
     if request.method == "POST":
+        client = MongoClient('localhost', 27017)
+        db = client.store
         products = {
             "column_names": ["id", "image_link", "commodity_name", "category"],
-            "data": [{"id": 1000,
-                      "image_link": "https://www.ibiar.com/images/6261107003705-256.jpg",
-                      "commodity_name": "لوبیا قرمز 900 گرمی گلستان",
-                      "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
-                     {"id": 1001,
-                      "image_link": "https://onemarketco.ir/wp-content/uploads/8083FA0D-46D9-4EC1-B53C-3DD7E7365400.jpeg",
-                      "commodity_name": "روغن مخصوص سرخ کردنی بدون پالم 2000 میلی لیتری اویلا",
-                      "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
-                     {"id": 1002,
-                      "image_link": "https://onemarketco.ir/wp-content/uploads/6EDDF87E-A388-4965-906D-3B63270AB958.jpeg",
-                      "commodity_name": "روغن مایع آفتابگردان ویتامینه 1800 میلی لیتری غنچه",
-                      "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
-                     {"id": 1003,
-                      "image_link": "https://www.ibiar.com/images/6260063200845-256.jpg",
-                      "commodity_name": "کره سنتی ۱۰۰ گرمی شکلی",
-                      "category": "مواد غذایی / لبنیات"},
-                     {"id": 1004,
-                      "image_link": "https://www.ibiar.com/images/8000070018686-256.jpg",
-                      "commodity_name": "پودر قهوه دم کردنی اسپرسو 250 گرمی لاواتزا",
-                      "category": "مواد غذایی / نوشیدنی"}]
-        }
+            "data":list(db.products.find({},{'_id':0}))
+            }
+        # products = {
+        #     "column_names": ["id", "image_link", "commodity_name", "category"],
+        #     "data": [{"id": 1000,
+        #               "image_link": "https://www.ibiar.com/images/6261107003705-256.jpg",
+        #               "commodity_name": "لوبیا قرمز 900 گرمی گلستان",
+        #               "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
+        #              {"id": 1001,
+        #               "image_link": "https://onemarketco.ir/wp-content/uploads/8083FA0D-46D9-4EC1-B53C-3DD7E7365400.jpeg",
+        #               "commodity_name": "روغن مخصوص سرخ کردنی بدون پالم 2000 میلی لیتری اویلا",
+        #               "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
+        #              {"id": 1002,
+        #               "image_link": "https://onemarketco.ir/wp-content/uploads/6EDDF87E-A388-4965-906D-3B63270AB958.jpeg",
+        #               "commodity_name": "روغن مایع آفتابگردان ویتامینه 1800 میلی لیتری غنچه",
+        #               "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
+        #              {"id": 1003,
+        #               "image_link": "https://www.ibiar.com/images/6260063200845-256.jpg",
+        #               "commodity_name": "کره سنتی ۱۰۰ گرمی شکلی",
+        #               "category": "مواد غذایی / لبنیات"},
+        #              {"id": 1004,
+        #               "image_link": "https://www.ibiar.com/images/8000070018686-256.jpg",
+        #               "commodity_name": "پودر قهوه دم کردنی اسپرسو 250 گرمی لاواتزا",
+        #               "category": "مواد غذایی / نوشیدنی"}]
+        # }
         return products
     else:
         abort(404)
