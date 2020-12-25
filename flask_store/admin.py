@@ -142,6 +142,7 @@ def set_repositories():
     if request.method == "POST":
         data = request.get_json()
         if 'add_repository' in data:
+            db.add_repositories(data)
             current_app.logger.debug('add_repository')
             current_app.logger.debug(data['repository_name'])
             return 'add_repository'
@@ -151,6 +152,7 @@ def set_repositories():
             current_app.logger.debug(data['repository_name'])
             return 'edit_repository'
         elif 'delete_repository' in data:
+            db.delete_repositories(data)
             current_app.logger.debug('delete_repository')
             current_app.logger.debug(data['repository_id'])
             return 'delete_repository'
@@ -164,7 +166,7 @@ def set_repositories():
 def get_repositories():
     if request.method == "POST":
         repositories = db.get_repositories()
-        repositories = {"column_names": ["id", "repository_name"],
+        repositories = {"column_names": ["_id", "repository_name"],
                         'data': repositories
                             }
         # repositories = {"column_names": ["id", "repository_name"],
