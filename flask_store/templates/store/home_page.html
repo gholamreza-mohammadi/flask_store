@@ -1,0 +1,24 @@
+{% extends "store/base_store.html" %}
+
+{% block style_block %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css_folder/store/home_page.css') }}"/>
+{% endblock %}
+
+{% block main %}
+    {% for product in products %}
+    <div class="product_category_and_cards_container">
+        <a href="#" class="product_category">{{ product["category"] }}</a>
+        <div class="cards_container">
+        {% for commodity in product["commodities"] %}
+            <div class="card">
+                <img src='{{ commodity["image_link"] }}'/>
+                <div class="commodity_titles_div">
+                    <h3>{{ commodity["commodity_name"] }}</h3>
+                    <h3>{{ commodity["price"] }}</h3>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
