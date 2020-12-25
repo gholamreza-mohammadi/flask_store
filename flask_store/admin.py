@@ -8,7 +8,8 @@ from flask import redirect
 from flask import session
 from flask import abort
 from cryptography.fernet import Fernet
-from pymongo import MongoClient
+from . import db
+
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -162,12 +163,16 @@ def set_repositories():
 @bp.route("/get-repository", methods=["POST", "GET"])
 def get_repositories():
     if request.method == "POST":
+        repositories = db.get_repositories()
         repositories = {"column_names": ["id", "repository_name"],
-                        'data': [
-                            {"id": 2000, "repository_name": "انبار شماره ۱"},
-                            {"id": 2001, "repository_name": "انبار شماره ۲"},
-                            {"id": 2002, "repository_name": "انبار شماره ۳"}
-                        ]}
+                        'data': repositories
+                            }
+        # repositories = {"column_names": ["id", "repository_name"],
+        #                 'data': [
+        #                     {"id": 2000, "repository_name": "انبار شماره ۱"},
+        #                     {"id": 2001, "repository_name": "انبار شماره ۲"},
+        #                     {"id": 2002, "repository_name": "انبار شماره ۳"}
+        #                 ]}
         return repositories
     else:
         abort(404)
@@ -222,11 +227,10 @@ def set_products():
 def get_products():
 
     if request.method == "POST":
-        client = MongoClient('localhost', 27017)
-        db = client.store
+        products = db.get_products()
         products = {
             "column_names": ["id", "image_link", "commodity_name", "category"],
-            "data":list(db.products.find({},{'_id':0}))
+            "data": products
             }
         # products = {
         #     "column_names": ["id", "image_link", "commodity_name", "category"],
