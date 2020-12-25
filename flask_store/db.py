@@ -35,7 +35,7 @@ def get_repositories():
 
 def add_repositories(data):
     db = client.store
-    if not (list(db.products.find({"repository_name":data['repository_name']}))):
+    if not (list(db.repositories.find({"repository_name":data['repository_name']}))):
         db.repositories.insert_one({
         "repository_name": data['repository_name']
         })
