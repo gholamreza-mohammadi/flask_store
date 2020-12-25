@@ -203,6 +203,7 @@ def set_products():
         else:
             data = request.get_json()
             if 'delete_product' in data:
+                db.delete_product(data)
                 current_app.logger.debug('delete_product')
                 current_app.logger.debug(data['product_id'])
                 return 'delete_product'
@@ -213,6 +214,7 @@ def set_products():
                 current_app.logger.debug(data['product_category'])
                 return 'edit_product'
             elif 'add_product' in data:
+                db.add_product(data)
                 current_app.logger.debug('add_product')
                 current_app.logger.debug(data['product_name'])
                 current_app.logger.debug(data['product_category'])
@@ -229,7 +231,7 @@ def get_products():
     if request.method == "POST":
         products = db.get_products()
         products = {
-            "column_names": ["id", "image_link", "commodity_name", "category"],
+            "column_names": ["_id", "image_link", "commodity_name", "category"],
             "data": products
             }
         # products = {
