@@ -130,7 +130,7 @@ $(function () {
                     $("a.edit_product").click(function (event) {
                         event.preventDefault();
                         var p_id = products_obj[$(this).attr("id")];
-                        $.post("category-api", function (response, status) {
+                        $.post("get-category", function (response, status) {
                             if (status == "success") {
                                 var popup = '<div class="popup">';
                                 popup += "<h2>افزودن / ویرایش کالا</h2>";
