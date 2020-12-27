@@ -24,6 +24,17 @@ def add_product(data):
 def delete_product(data):
     db = client.store
     db.products.delete_one({"_id": ObjectId(data['product_id'])})
+    
+def edit_product(data):
+    db = client.store
+    db.products.update_one(
+        {"_id":ObjectId(data['product_id'])},
+        {'$set':{
+            'commodity_name':data['product_name'],
+            'category':data['product_category']
+            }
+        })
+        
 
 #=============================repositories=============================
 def get_repositories():
@@ -43,3 +54,7 @@ def add_repositories(data):
 def delete_repositories(data):
     db = client.store
     db.repositories.delete_one({"_id": ObjectId(data['repository_id'])})
+   
+def edit_repository(data):
+    db = client.store
+    db.repositories.update_one({"_id":ObjectId(data['repository_id'])},{'$set':{'repository_name':data['repository_name']}})

@@ -147,6 +147,7 @@ def set_repositories():
             current_app.logger.debug(data['repository_name'])
             return 'add_repository'
         elif 'edit_repository' in data:
+            db.edit_repository(data)
             current_app.logger.debug('edit_repository')
             current_app.logger.debug(data['repository_id'])
             current_app.logger.debug(data['repository_name'])
@@ -210,6 +211,7 @@ def set_products():
                 current_app.logger.debug(data['product_id'])
                 return 'delete_product'
             elif 'edit_product' in data:
+                db.edit_product(data)
                 current_app.logger.debug('edit_product')
                 current_app.logger.debug(data['product_id'])
                 current_app.logger.debug(data['product_name'])
