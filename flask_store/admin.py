@@ -191,7 +191,7 @@ def get_categories():
                     output.append(element['name'])
             return output
 
-        with open('./static/json_folder/categories.json') as categories_json:
+        with open('flask_store/static/json_folder/categories.json') as categories_json:
             categories_json = json.load(categories_json)
 
         categories = {
