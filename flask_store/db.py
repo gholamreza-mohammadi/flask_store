@@ -18,9 +18,10 @@ def add_product(data):
     db = client.store
     if not (list(db.products.find({"commodity_name": data['product_name']}))):
         db.products.insert_one({
-            "image_link": "",
+            "image_link": data['product_image_link'],
             "commodity_name": data['product_name'],
-            "category": data['product_category']
+            "category": data['product_category'],
+            "description": data['product_description']
         })
 
 
@@ -34,8 +35,10 @@ def edit_product(data):
     db.products.update_one(
         {"_id": ObjectId(data['product_id'])},
         {'$set': {
+            "image_link": data['product_image_link'],
             'commodity_name': data['product_name'],
-            'category': data['product_category']
+            'category': data['product_category'],
+            "description": data['product_description']
         }
         })
 

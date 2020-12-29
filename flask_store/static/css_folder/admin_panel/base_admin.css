@@ -86,3 +86,23 @@ div.container {
 div.popup > a {
     margin: 10px 0;
 }
+
+input {
+    width: 90%;
+    margin: 0 auto;
+}
+
+textarea {
+    width: 92%;
+    margin: 0 auto;
+    resize: none;
+}
+
+input.input_number {
+    width: 40%;
+    margin: 10px 20px;
+}
+
+input.product_image_link {
+    direction: ltr;
+}

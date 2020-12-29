@@ -212,14 +212,17 @@ def set_products():
                 db.edit_product(data)
                 current_app.logger.debug('edit_product')
                 current_app.logger.debug(data['product_id'])
+                current_app.logger.debug(data['product_image_link'])
                 current_app.logger.debug(data['product_name'])
                 current_app.logger.debug(data['product_category'])
                 return 'edit_product'
             elif 'add_product' in data:
                 db.add_product(data)
                 current_app.logger.debug('add_product')
+                current_app.logger.debug(data['product_image_link'])
                 current_app.logger.debug(data['product_name'])
                 current_app.logger.debug(data['product_category'])
+                current_app.logger.debug(data['product_description'])
                 return 'add_product'
             else:
                 return 'invalid request'
@@ -232,7 +235,7 @@ def get_products():
     if request.method == "POST":
         products = db.get_products()
         products = {
-            "column_names": ["_id", "image_link", "commodity_name", "category"],
+            "column_names": ["_id", "image_link", "commodity_name", "category", "description"],
             "data": products
         }
         # products = {
