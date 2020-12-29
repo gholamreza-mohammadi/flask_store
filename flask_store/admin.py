@@ -105,7 +105,7 @@ def set_inventories():
 @bp.route("/get-inventory", methods=["POST", "GET"])
 def get_inventories():
     if request.method == "POST":
-        inventories = {"column_names": ["id", "repository_name", "commodity_name", "price", "quantity"],
+        inventories = {"column_names": ["_id", "repository_name", "commodity_name", "price", "quantity"],
                        'data': db.get_inventories()
                        }
         # inventories = {"column_names": ["id", "repository_name", "commodity_name", "price", "quantity"],
