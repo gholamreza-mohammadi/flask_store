@@ -181,12 +181,21 @@ def get_repositories():
 @bp.route("/get-category", methods=["POST", "GET"])
 def get_categories():
     if request.method == "POST":
+        def get_categoies_list(input_list: list) -> list:
+            output = []
+            for element in input_list:
+                sub_categoies = element.get('subcategoies')
+                if sub_categoies is not None:
+                    output.extend([element['name'] + ' / ' + name for name in get_categoies_list(sub_categoies)])
+                else:
+                    output.append(element['name'])
+            return output
+
+        with open('./static/json_folder/categories.json') as categories_json:
+            categories_json = json.load(categories_json)
+
         categories = {
-            'data': [
-                'مواد غذایی / کالاهای اساسی و خوار و بار',
-                'مواد غذایی / لبنیات',
-                'مواد غذایی / نوشیدنی'
-            ]
+            'data': get_categoies_list(categories_json)
         }
         return categories
     else:
