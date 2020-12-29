@@ -10,7 +10,6 @@ from flask import abort
 from cryptography.fernet import Fernet
 from . import db
 
-
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
 
@@ -142,7 +141,6 @@ def get_inventories():
         abort(404)
 
 
-
 @bp.route("/set-repository", methods=["POST", "GET"])
 def set_repositories():
     if request.method == "POST":
@@ -174,8 +172,7 @@ def get_repositories():
     if request.method == "POST":
         repositories = db.get_repositories()
         repositories = {"column_names": ["_id", "repository_name"],
-                        'data': repositories
-                            }
+                        'data': repositories}
         # repositories = {"column_names": ["id", "repository_name"],
         #                 'data': [
         #                     {"id": 2000, "repository_name": "انبار شماره ۱"},
@@ -187,15 +184,16 @@ def get_repositories():
         abort(404)
 
 
-
 @bp.route("/get-category", methods=["POST", "GET"])
 def get_categories():
     if request.method == "POST":
-        categories = {'data': [
-            'مواد غذایی / کالاهای اساسی و خوار و بار',
-            'مواد غذایی / لبنیات',
-            'مواد غذایی / نوشیدنی'
-        ]}
+        categories = {
+            'data': [
+                'مواد غذایی / کالاهای اساسی و خوار و بار',
+                'مواد غذایی / لبنیات',
+                'مواد غذایی / نوشیدنی'
+            ]
+        }
         return categories
     else:
         abort(404)
@@ -220,14 +218,17 @@ def set_products():
                 db.edit_product(data)
                 current_app.logger.debug('edit_product')
                 current_app.logger.debug(data['product_id'])
+                current_app.logger.debug(data['product_image_link'])
                 current_app.logger.debug(data['product_name'])
                 current_app.logger.debug(data['product_category'])
                 return 'edit_product'
             elif 'add_product' in data:
                 db.add_product(data)
                 current_app.logger.debug('add_product')
+                current_app.logger.debug(data['product_image_link'])
                 current_app.logger.debug(data['product_name'])
                 current_app.logger.debug(data['product_category'])
+                current_app.logger.debug(data['product_description'])
                 return 'add_product'
             else:
                 return 'invalid request'
@@ -237,13 +238,12 @@ def set_products():
 
 @bp.route("/get-products", methods=["POST", "GET"])
 def get_products():
-
     if request.method == "POST":
         products = db.get_products()
         products = {
-            "column_names": ["_id", "image_link", "commodity_name", "category"],
+            "column_names": ["_id", "image_link", "commodity_name", "category", "description"],
             "data": products
-            }
+        }
         # products = {
         #     "column_names": ["id", "image_link", "commodity_name", "category"],
         #     "data": [{"id": 1000,
