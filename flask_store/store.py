@@ -7,9 +7,9 @@ from flask import url_for
 from flask import redirect
 from flask import session
 from flask import abort
-from . import db
 from pymongo import MongoClient
 from bson import ObjectId
+from . import db
 
 bp = Blueprint("store", __name__)
 
@@ -41,10 +41,11 @@ def home():
     }]
     return render_template("store/home_page.html", products=products)
 
+
 @bp.route("/<id>")
 def detail(id):
     client = MongoClient('localhost', 27017)
     db = client.store
     # commodity = list(db.inventories.find({'_id':ObjectId(id)}))[0]
-    commodity = list(db.products.find({'_id':ObjectId(id)}))[0]
-    return render_template("store/detail.html",commodity=commodity)
+    commodity = list(db.products.find({'_id': ObjectId(id)}))[0]
+    return render_template("store/detail.html", commodity=commodity)

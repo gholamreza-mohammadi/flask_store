@@ -44,27 +44,27 @@ def get_orders():
     if request.method == "POST":
         orders = {"column_names": ["id", "user_name", "total_price", "order_time"],
                   'data': db.get_orders()}
-                #       {"id": 4000,
-                #        "user_name": "اکبر زمانی",
-                #        "total_price": 920000,
-                #        "order_time": '1399/01/05'},
-                #       {"id": 4001,
-                #        "user_name": "رامین رحیمی",
-                #        "total_price": 8764300,
-                #        "order_time": '1399/01/04'},
-                #       {"id": 4002,
-                #        "user_name": "ملیکا زارعی",
-                #        "total_price": 3324000,
-                #        "order_time": '1399/01/03'},
-                #       {"id": 4003,
-                #        "user_name": "نیکی کریمی",
-                #        "total_price": 1258000,
-                #        "order_time": '1399/01/02'},
-                #       {"id": 4004,
-                #        "user_name": "فریبرز عربنیا",
-                #        "total_price": 540000,
-                #        "order_time": '1399/01/01'}
-                #   ]}
+        #       {"id": 4000,
+        #        "user_name": "اکبر زمانی",
+        #        "total_price": 920000,
+        #        "order_time": '1399/01/05'},
+        #       {"id": 4001,
+        #        "user_name": "رامین رحیمی",
+        #        "total_price": 8764300,
+        #        "order_time": '1399/01/04'},
+        #       {"id": 4002,
+        #        "user_name": "ملیکا زارعی",
+        #        "total_price": 3324000,
+        #        "order_time": '1399/01/03'},
+        #       {"id": 4003,
+        #        "user_name": "نیکی کریمی",
+        #        "total_price": 1258000,
+        #        "order_time": '1399/01/02'},
+        #       {"id": 4004,
+        #        "user_name": "فریبرز عربنیا",
+        #        "total_price": 540000,
+        #        "order_time": '1399/01/01'}
+        #   ]}
         return orders
     else:
         abort(404)
@@ -83,7 +83,7 @@ def set_inventories():
             current_app.logger.debug(data['inventory_quantity'])
             return 'add_repository'
         elif 'edit_inventory' in data:
-            # db.edit_inventory(data)
+            db.edit_inventory(data)
             current_app.logger.debug('edit_inventory')
             current_app.logger.debug(data['inventory_id'])
             current_app.logger.debug(data['inventory_repository'])
@@ -92,7 +92,7 @@ def set_inventories():
             current_app.logger.debug(data['inventory_quantity'])
             return 'edit_inventory'
         elif 'delete_inventory' in data:
-            # db.delete_inventory(data)
+            db.delete_inventory(data)
             current_app.logger.debug('delete_inventory')
             current_app.logger.debug(data['inventory_id'])
             return 'delete_inventory'
@@ -197,7 +197,7 @@ def get_categories():
                     output.append(element['name'])
             return output
 
-        with open('flask_store/static/json_folder/categories.json',encoding='utf-8') as categories_json:
+        with open('flask_store/static/json_folder/categories.json', encoding='utf-8') as categories_json:
             categories_json = json.load(categories_json)
 
         categories = {
@@ -224,12 +224,12 @@ def set_products():
                 current_app.logger.debug(data['product_id'])
                 return 'delete_product'
             elif 'edit_product' in data:
-                db.edit_product(data)
                 current_app.logger.debug('edit_product')
                 current_app.logger.debug(data['product_id'])
                 current_app.logger.debug(data['product_image_link'])
                 current_app.logger.debug(data['product_name'])
                 current_app.logger.debug(data['product_category'])
+                db.edit_product(data)
                 return 'edit_product'
             elif 'add_product' in data:
                 db.add_product(data)

@@ -155,7 +155,7 @@ $(function () {
                                 popup += "<h4>لینک تصویر:</h4>";
                                 popup += '<input type="text" class="product_image_link" id="edit_product_image_link" name="edit_product_image_link" value="' + product_obj.image_link + '"><br>';
                                 popup += "<h4>توضیحات کالا:</h4>";
-                                popup += '<textarea id="product_description" name="product_description" rows="5" wrap="soft">' + product_obj.description + '</textarea><br>';
+                                popup += '<textarea id="edit_product_description" name="edit_product_description" rows="5" wrap="soft">' + product_obj.description + '</textarea><br>';
                                 popup += '<div class="container"><a href="" class="btn_a" id="save_edited_product_btn">ذخیره</a></div>';
                                 popup += "</div>";
 
@@ -174,7 +174,8 @@ $(function () {
                                                                    "product_id": product_obj.id,
                                                                    "product_image_link": $('input#edit_product_image_link').val(),
                                                                    "product_name": $('input#edit_product_name').val(),
-                                                                   "product_category": $('select#edit_product_category').find(":selected").text()})  
+                                                                   "product_category": $('select#edit_product_category').find(":selected").text(),
+                                                                   "product_description": $('textarea#edit_product_description').val()})  
                                         }).always(load_product_table);
                                         $("div.popup").trigger('close');
                                     } else {
