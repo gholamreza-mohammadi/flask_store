@@ -1,6 +1,6 @@
 maktab42_HW_project2_front/
 flask_venv/
-flask_store/tmp
+flask_store/tmp.py
 __pycache__/
 .cache/
 .pytest_cache/
