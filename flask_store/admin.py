@@ -44,28 +44,28 @@ def management():
 def get_orders():
     if request.method == "POST":
         orders = {"column_names": ["id", "user_name", "total_price", "order_time"],
-                  'data': [
-                      {"id": 4000,
-                       "user_name": "اکبر زمانی",
-                       "total_price": 920000,
-                       "order_time": '1399/01/05'},
-                      {"id": 4001,
-                       "user_name": "رامین رحیمی",
-                       "total_price": 8764300,
-                       "order_time": '1399/01/04'},
-                      {"id": 4002,
-                       "user_name": "ملیکا زارعی",
-                       "total_price": 3324000,
-                       "order_time": '1399/01/03'},
-                      {"id": 4003,
-                       "user_name": "نیکی کریمی",
-                       "total_price": 1258000,
-                       "order_time": '1399/01/02'},
-                      {"id": 4004,
-                       "user_name": "فریبرز عربنیا",
-                       "total_price": 540000,
-                       "order_time": '1399/01/01'}
-                  ]}
+                  'data': db.get_orders()}
+                #       {"id": 4000,
+                #        "user_name": "اکبر زمانی",
+                #        "total_price": 920000,
+                #        "order_time": '1399/01/05'},
+                #       {"id": 4001,
+                #        "user_name": "رامین رحیمی",
+                #        "total_price": 8764300,
+                #        "order_time": '1399/01/04'},
+                #       {"id": 4002,
+                #        "user_name": "ملیکا زارعی",
+                #        "total_price": 3324000,
+                #        "order_time": '1399/01/03'},
+                #       {"id": 4003,
+                #        "user_name": "نیکی کریمی",
+                #        "total_price": 1258000,
+                #        "order_time": '1399/01/02'},
+                #       {"id": 4004,
+                #        "user_name": "فریبرز عربنیا",
+                #        "total_price": 540000,
+                #        "order_time": '1399/01/01'}
+                #   ]}
         return orders
     else:
         abort(404)

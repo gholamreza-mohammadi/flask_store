@@ -86,3 +86,9 @@ def edit_inventory(data):
             "create_time":datetime.utcnow()
             }})
     
+#=============================repositories=============================   
+def get_orders():
+    orders = list(db.orders.find())
+    for order in orders:
+        order['_id'] = str(order['_id'])
+    return orders
