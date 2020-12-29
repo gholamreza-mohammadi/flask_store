@@ -1,0 +1,26 @@
+.p_icon{
+    height: fit-content;
+}
+div.head{
+    display: flex;
+}
+p.p_category{
+    font-size: larger;
+    background-color: red;
+}
+div.price{
+    display: flex;
+}
+div.price span{
+    font-size: small;
+}
+
+div.buy button{
+    background-color: greenyellow;
+    padding: 5px;
+    margin-right: 20px;
+    box-shadow: rgb(3, 40, 6) 3px 3px 5px;
+}
+div.description{
+    background-color: rebeccapurple;
+}
