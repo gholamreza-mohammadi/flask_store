@@ -76,6 +76,7 @@ def set_inventories():
     if request.method == "POST":
         data = request.get_json()
         if 'add_inventory' in data:
+            db.add_inventory(data)
             current_app.logger.debug('add_inventory')
             current_app.logger.debug(data['inventory_repository'])
             current_app.logger.debug(data['inventory_product'])
@@ -83,6 +84,7 @@ def set_inventories():
             current_app.logger.debug(data['inventory_quantity'])
             return 'add_repository'
         elif 'edit_inventory' in data:
+            # db.edit_inventory(data)
             current_app.logger.debug('edit_inventory')
             current_app.logger.debug(data['inventory_id'])
             current_app.logger.debug(data['inventory_repository'])
@@ -91,6 +93,7 @@ def set_inventories():
             current_app.logger.debug(data['inventory_quantity'])
             return 'edit_inventory'
         elif 'delete_inventory' in data:
+            # db.delete_inventory(data)
             current_app.logger.debug('delete_inventory')
             current_app.logger.debug(data['inventory_id'])
             return 'delete_inventory'
@@ -104,33 +107,36 @@ def set_inventories():
 def get_inventories():
     if request.method == "POST":
         inventories = {"column_names": ["id", "repository_name", "commodity_name", "price", "quantity"],
-                       'data': [
-                           {"id": 3000,
-                            "repository_name": "انبار شماره ۱",
-                            "commodity_name": "لوبیا قرمز 900 گرمی گلستان",
-                            "price": 200000,
-                            "quantity": 100},
-                           {"id": 3001,
-                            "repository_name": "انبار شماره ۱",
-                            "commodity_name": "روغن مخصوص سرخ کردنی بدون پالم 2000 میلی لیتری اویلا",
-                            "price": 10000,
-                            "quantity": 200},
-                           {"id": 3002,
-                            "repository_name": "انبار شماره ۲",
-                            "commodity_name": "روغن مایع آفتابگردان ویتامینه 1800 میلی لیتری غنچه",
-                            "price": 150000,
-                            "quantity": 300},
-                           {"id": 3003,
-                            "repository_name": "انبار شماره ۲",
-                            "commodity_name": "کره سنتی ۱۰۰ گرمی شکلی",
-                            "price": 25500,
-                            "quantity": 400},
-                           {"id": 3004,
-                            "repository_name": "انبار شماره ۳",
-                            "commodity_name": "پودر قهوه دم کردنی اسپرسو 250 گرمی لاواتزا",
-                            "price": 1000000,
-                            "quantity": 500}
-                       ]}
+                       'data': db.get_inventories()
+                       }
+        # inventories = {"column_names": ["id", "repository_name", "commodity_name", "price", "quantity"],
+        #                'data': [
+        #                    {"id": 3000,
+        #                     "repository_name": "انبار شماره ۱",
+        #                     "commodity_name": "لوبیا قرمز 900 گرمی گلستان",
+        #                     "price": 200000,
+        #                     "quantity": 100},
+        #                    {"id": 3001,
+        #                     "repository_name": "انبار شماره ۱",
+        #                     "commodity_name": "روغن مخصوص سرخ کردنی بدون پالم 2000 میلی لیتری اویلا",
+        #                     "price": 10000,
+        #                     "quantity": 200},
+        #                    {"id": 3002,
+        #                     "repository_name": "انبار شماره ۲",
+        #                     "commodity_name": "روغن مایع آفتابگردان ویتامینه 1800 میلی لیتری غنچه",
+        #                     "price": 150000,
+        #                     "quantity": 300},
+        #                    {"id": 3003,
+        #                     "repository_name": "انبار شماره ۲",
+        #                     "commodity_name": "کره سنتی ۱۰۰ گرمی شکلی",
+        #                     "price": 25500,
+        #                     "quantity": 400},
+        #                    {"id": 3004,
+        #                     "repository_name": "انبار شماره ۳",
+        #                     "commodity_name": "پودر قهوه دم کردنی اسپرسو 250 گرمی لاواتزا",
+        #                     "price": 1000000,
+        #                     "quantity": 500}
+        #                ]}
         return inventories
     else:
         abort(404)

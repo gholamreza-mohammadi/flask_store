@@ -1,15 +1,15 @@
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import datetime
-
+from flask import current_app
 client = MongoClient('localhost', 27017)
 db = client.store
 
 #=============================products=============================
 def get_products():
     products = list(db.products.find())
-    for p in products:
-        p['_id'] = str(p['_id'])
+    for product in products:
+        product['_id'] = str(product['_id'])
     return products
 
 def add_product(data):
@@ -31,13 +31,12 @@ def edit_product(data):
             'category':data['product_category']
             }
         })
-        
-
+ 
 #=============================repositories=============================
 def get_repositories():
     repositories = list(db.repositories.find())
-    for p in repositories:
-        p['_id'] = str(p['_id'])
+    for repository in repositories:
+        repository['_id'] = str(repository['_id'])
     return repositories
 
 def add_repositories(data):
@@ -51,3 +50,39 @@ def delete_repositories(data):
    
 def edit_repository(data):
     db.repositories.update_one({"_id":ObjectId(data['repository_id'])},{'$set':{'repository_name':data['repository_name']}})
+
+#=============================repositories=============================    
+def get_inventories():
+    inventories = list(db.inventories.find())
+    for inventory in inventories:
+        inventory['_id'] = str(inventory['_id'])
+    return inventories
+
+def add_inventory(data):
+    exist = db.inventories.find({
+        'commodity_name':data['inventory_product'],
+        'repository_name':data['inventory_repository']})
+    if not list(exist):
+        db.inventories.insert_one({
+            "commodity_name":data['inventory_product'],
+            "price":data['inventory_price'],
+            "quantity":data['inventory_quantity'],
+            "repository_name":data['inventory_repository'],
+            "create_time":datetime.utcnow()
+            })
+
+def delete_inventory(data):
+    db.inventories.delete_one({"_id": ObjectId(data['inventory_id'])})
+    
+    
+def edit_inventory(data):
+    db.repositories.update_one(
+        {"_id":ObjectId(data['repository_id'])},
+        {'$set':{
+            "commodity_name":data['inventory_product'],
+            "price":data['inventory_price'],
+            "quantity":data['inventory_quantity'],
+            "repository_name":data['inventory_repository'],
+            "create_time":datetime.utcnow()
+            }})
+    
