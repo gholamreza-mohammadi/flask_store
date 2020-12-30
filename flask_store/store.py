@@ -16,23 +16,23 @@ bp = Blueprint("store", __name__)
 
 @bp.route("/", methods=["GET", "POST"])
 def home():
-    products_category=[]
+    products_category = []
     categories = ['مواد غذایی / کالاهای اساسی و خوار و بار',
-                'مواد غذایی / لبنیات',
-                'مواد غذایی / مواد پروتئینی']
+                  'مواد غذایی / لبنیات',
+                  'مواد غذایی / مواد پروتئینی']
     client = MongoClient('localhost', 27017)
     db = client.store
     for category in categories:
-        pp = db.inventories.find({'category':category})
+        pp = db.inventories.find({'category': category})
         pp = list(pp)
         products = []
         for p in pp:
-            products.append({"id":p['_id'],
-                            "image_link": "https://appiranie.websites.co.in/e-store/img/defaults/product-default.png",
-                            "commodity_name": p['commodity_name'],
-                            "price": p['price']}) 
-        products_category.append({'category':category,
-                                "commodities":products})
+            products.append({"id": p['_id'],
+                             "image_link": "https://appiranie.websites.co.in/e-store/img/defaults/product-default.png",
+                             "commodity_name": p['commodity_name'],
+                             "price": p['price']})
+        products_category.append({'category': category,
+                                  "commodities": products})
     # products = [{
     #     "category": "مواد غذایی / کالاهای اساسی و خوار و بار",
     #     "commodities": [{"id": 1000,
@@ -63,8 +63,8 @@ def home():
 def detail(id):
     client = MongoClient('localhost', 27017)
     db = client.store
-    commodity = list(db.inventories.find({'_id':ObjectId(id)}))[0]
+    commodity = list(db.inventories.find({'_id': ObjectId(id)}))[0]
     de_im = list(db.products.find(
         {"commodity_name": commodity['commodity_name']},
-        {"_id":0,'description':1,'image_link':1}))[0]
-    return render_template("store/detail.html", commodity=commodity,de_im=de_im)
+        {"_id": 0, 'description': 1, 'image_link': 1}))[0]
+    return render_template("store/detail.html", commodity=commodity, de_im=de_im)
