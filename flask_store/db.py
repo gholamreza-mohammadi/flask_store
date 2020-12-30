@@ -74,6 +74,12 @@ def get_inventories():
     return inventories
 
 
+def get_category(product):
+    return list(db.products.find(
+        {"commodity_name": product},
+        {'_id': 0, 'category': 1}))[0]['category']
+
+
 def add_inventory(data):
     exist = db.inventories.find({
         'commodity_name': data['inventory_product'],
@@ -81,6 +87,7 @@ def add_inventory(data):
     if not list(exist):
         db.inventories.insert_one({
             "commodity_name": data['inventory_product'],
+            "category": get_category(data['inventory_product']),
             "price": data['inventory_price'],
             "quantity": data['inventory_quantity'],
             "repository_name": data['inventory_repository'],
@@ -97,6 +104,7 @@ def edit_inventory(data):
         {"_id": ObjectId(data['inventory_id'])},
         {'$set': {
             "commodity_name": data['inventory_product'],
+            "category": get_category(data['inventory_product']),
             "price": data['inventory_price'],
             "quantity": data['inventory_quantity'],
             "repository_name": data['inventory_repository'],

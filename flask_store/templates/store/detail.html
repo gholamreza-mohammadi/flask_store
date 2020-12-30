@@ -6,17 +6,16 @@
 {% endblock %}
 
 {% block main %}
+<div>
 <div class="head">
-    <img class="p_icon" src="{{commodity['image_link']}}" alt="">
+    <img class="p_icon" src="{{de_im['image_link']}}" alt="">
     <div class="detail">
         <h1 class="p_name">{{ commodity["commodity_name"] }}</h1>
         <p class="p_category">{{ commodity["category"] }}</p>
-        <div class="price"><h2>200000<span class=""> تومان </span></h2></div>
+        <div class="price"><h2>{{ commodity["price"] }}<span class=""> تومان </span></h2></div>
         <div class="buy"><input type="number" id="quantity" name="quantity" min="1" max="5"><button>افزودن به سبد خرید</button></div>
     </div>
 </div>
-<div class="description">
-    {{ commodity["product_description"] }}
+<div class="description">{{ de_im['description'] }}</div>
 </div>
-
 {% endblock %}

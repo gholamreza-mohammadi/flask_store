@@ -20,6 +20,10 @@ div.cards_container {
     overflow: auto;
 }
 
+a.card{
+    text-decoration: none;
+}
+
 div.card {
     border: 2px solid #ddd;
     box-shadow: 2px 2px 5px #ccc;
@@ -37,6 +41,11 @@ div.card:hover {
 
 div.card > img {
     width: 150px;
+}
+
+div.commodity_titles_div{
+    width: calc(100% - 150px);
+    padding-right: 10px;
 }
 
 @media (max-width: calc((10 / 8) * 420px)) {

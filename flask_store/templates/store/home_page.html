@@ -9,15 +9,17 @@
     <div class="product_category_and_cards_container">
         <a href="#" class="product_category">{{ product["category"] }}</a>
         <div class="cards_container">
-        {% for commodity in product["commodities"] %}
-            <div class="card">
-                <img src='{{ commodity["image_link"] }}'/>
-                <div class="commodity_titles_div">
-                    <h3>{{ commodity["commodity_name"] }}</h3>
-                    <h3>{{ commodity["price"] }}</h3>
+            {% for commodity in product["commodities"] %}
+            <a class="card" href="{{ url_for('store.detail', id=commodity['id']) }}">
+                <div class="card">
+                    <img src='{{ commodity["image_link"] }}'/>
+                    <div class="commodity_titles_div">
+                        <h3>{{ commodity["commodity_name"] }}</h3>
+                        <h4>{{ commodity["price"] }} تومان</h4>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            </a>
+            {% endfor %}
         </div>
     </div>
     {% endfor %}
