@@ -28,7 +28,7 @@ def home():
         products = []
         for p in pp:
             products.append({"id":p['_id'],
-                            "image_link": "https://appiranie.websites.co.in/e-store/img/defaults/product-default.png",
+                            "image_link": p['imag_link'],
                             "commodity_name": p['commodity_name'],
                             "price": p['price']}) 
         products_category.append({'category':category,
@@ -64,7 +64,4 @@ def detail(id):
     client = MongoClient('localhost', 27017)
     db = client.store
     commodity = list(db.inventories.find({'_id':ObjectId(id)}))[0]
-    de_im = list(db.products.find(
-        {"commodity_name": commodity['commodity_name']},
-        {"_id":0,'description':1,'image_link':1}))[0]
-    return render_template("store/detail.html", commodity=commodity,de_im=de_im)
+    return render_template("store/detail.html", commodity=commodity)

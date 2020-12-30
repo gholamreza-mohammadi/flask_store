@@ -1,12 +1,15 @@
-.p_icon{
-    height: fit-content;
-}
+
 div.head{
     display: flex;
 }
+
+img.p_icon{
+    height: 250px;
+    width: 250px;
+}
+
 p.p_category{
     font-size: larger;
-    background-color: red;
 }
 div.price{
     display: flex;

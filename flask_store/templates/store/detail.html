@@ -8,7 +8,9 @@
 {% block main %}
 <div>
 <div class="head">
-    <img class="p_icon" src="{{de_im['image_link']}}" alt="">
+    <div class="img">
+        <img class="p_icon" src="{{commodity['image_link']}}" alt="">
+    </div>
     <div class="detail">
         <h1 class="p_name">{{ commodity["commodity_name"] }}</h1>
         <p class="p_category">{{ commodity["category"] }}</p>
@@ -16,6 +18,6 @@
         <div class="buy"><input type="number" id="quantity" name="quantity" min="1" max="5"><button>افزودن به سبد خرید</button></div>
     </div>
 </div>
-<div class="description">{{ de_im['description'] }}</div>
+<div class="description">{{ commodity['description'] }}</div>
 </div>
 {% endblock %}
