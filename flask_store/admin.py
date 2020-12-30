@@ -9,6 +9,7 @@ from flask import session
 from flask import abort
 from cryptography.fernet import Fernet
 from . import db
+from .functions import get_categoies_list
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -187,15 +188,6 @@ def get_repositories():
 @bp.route("/get-category", methods=["POST", "GET"])
 def get_categories():
     if request.method == "POST":
-        def get_categoies_list(input_list: list) -> list:
-            output = []
-            for element in input_list:
-                sub_categoies = element.get('subcategoies')
-                if sub_categoies is not None:
-                    output.extend([element['name'] + ' / ' + name for name in get_categoies_list(sub_categoies)])
-                else:
-                    output.append(element['name'])
-            return output
 
         with open('flask_store/static/json_folder/categories.json', encoding='utf-8') as categories_json:
             categories_json = json.load(categories_json)

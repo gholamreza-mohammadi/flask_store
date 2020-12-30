@@ -7,32 +7,45 @@ from flask import url_for
 from flask import redirect
 from flask import session
 from flask import abort
+from flask import Markup
 from pymongo import MongoClient
 from bson import ObjectId
 from . import db
+from .functions import get_categoies_list, hierarchical_category_list
 
 bp = Blueprint("store", __name__)
 
 
 @bp.route("/", methods=["GET", "POST"])
 def home():
+    with open('flask_store/static/json_folder/categories.json', encoding='utf-8') as categories_json:
+        categories_dict = json.load(categories_json)
+
     products_category = []
-    categories = ['مواد غذایی / کالاهای اساسی و خوار و بار',
-                  'مواد غذایی / لبنیات',
-                  'مواد غذایی / مواد پروتئینی']
+    categories = []
+
+    for element in categories_dict:
+        sub_categoies = element.get('subcategoies')
+        if sub_categoies:
+            for each in sub_categoies:
+                categories.append(element['name'] + ' - ' + each['name'])
+        else:
+            categories.append(element['name'])
+
     client = MongoClient('localhost', 27017)
     db = client.store
+
     for category in categories:
-        pp = db.inventories.find({'category': category})
-        pp = list(pp)
+        pp = list(db.inventories.find({'category': {'$regex': category}}))
         products = []
         for p in pp:
             products.append({"id": p['_id'],
                              "image_link": "https://appiranie.websites.co.in/e-store/img/defaults/product-default.png",
                              "commodity_name": p['commodity_name'],
                              "price": p['price']})
-        products_category.append({'category': category,
-                                  "commodities": products})
+        products_category.append({'category': category.split('-')[-1].strip(),
+                                  'category_full': category,
+                                  'commodities': products})
     # products = [{
     #     "category": "مواد غذایی / کالاهای اساسی و خوار و بار",
     #     "commodities": [{"id": 1000,
@@ -56,10 +69,11 @@ def home():
     #                      "commodity_name": "پودر قهوه دم کردنی اسپرسو 250 گرمی لاواتزا",
     #                      "price": 50000}]
     # }]
+    # current_app.logger.debug(products_category)
     return render_template("store/home_page.html", products=products_category)
 
 
-@bp.route("/<id>")
+@bp.route("/product/<id>")
 def detail(id):
     client = MongoClient('localhost', 27017)
     db = client.store
@@ -67,4 +81,28 @@ def detail(id):
     de_im = list(db.products.find(
         {"commodity_name": commodity['commodity_name']},
         {"_id": 0, 'description': 1, 'image_link': 1}))[0]
-    return render_template("store/detail.html", commodity=commodity, de_im=de_im)
+    return render_template("store/detail_page.html", commodity=commodity, de_im=de_im)
+
+
+@bp.route("/category/<category_name>")
+def category(category_name):
+    with open('flask_store/static/json_folder/categories.json', encoding='utf-8') as categories_json:
+        categories_dict = json.load(categories_json)
+
+    categories = hierarchical_category_list(categories_dict)
+
+    client = MongoClient('localhost', 27017)
+    db = client.store
+
+    products_inventory_list = list(db.inventories.find({'category': {'$regex': category_name}}))
+    products = []
+    for product_inventory in products_inventory_list:
+        products.append({"id": product_inventory['_id'],
+                         "image_link": "https://appiranie.websites.co.in/e-store/img/defaults/product-default.png",
+                         "commodity_name": product_inventory['commodity_name'],
+                         "price": product_inventory['price']})
+
+    # return category_name
+    return render_template("store/category_page.html", categories=categories, products=products)
+    # test = Markup(f'<a href="{url_for("store.detail", id="5feba1a948c91e7feb6cc488")}">test</a>')
+    # return render_template("store/category_page.html", test=test)

@@ -1,0 +1,28 @@
+{% extends "store/base_store.html" %}
+
+{% block style_block %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css_folder/store/home_page.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css_folder/store/category_page.css') }}"/>
+{% endblock %}
+
+{% block main %}
+<!--    {% for product in products %}-->
+<!--    <div class="product_category_and_cards_container">-->
+<!--        <a href="#" class="product_category">{{ product["category"] }}</a>-->
+<!--        <div class="cards_container">-->
+<!--            {% for commodity in product["commodities"] %}-->
+<!--            <a class="card" href="{{ url_for('store.detail', id=commodity['id']) }}">-->
+<!--                <div class="card">-->
+<!--                    <img class="card_image" src='{{ commodity["image_link"] }}'/>-->
+<!--                    <div class="commodity_titles_div">-->
+<!--                        <h3>{{ commodity["commodity_name"] }}</h3>-->
+<!--                        <h4>{{ commodity["price"] }} تومان</h4>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    {% endfor %}-->
+{{ test }}
+{% endblock %}
