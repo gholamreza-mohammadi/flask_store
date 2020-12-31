@@ -11,7 +11,7 @@ from flask import Markup
 from pymongo import MongoClient
 from bson import ObjectId
 from . import db
-from .functions import get_categoies_list, hierarchical_category_list
+from .functions import *
 
 bp = Blueprint("store", __name__)
 
@@ -90,19 +90,34 @@ def category(category_name):
         categories_dict = json.load(categories_json)
 
     categories = hierarchical_category_list(categories_dict)
+    # current_app.logger.debug(categories)
+
+    def categories_to_markup(markup_str: str, _categories: list) -> str:
+        markup_str += '<ul>'
+        for element in _categories:
+            markup_str += f'<li><a href="{url_for("store.category", category_name=element["name"][1])}">' + element['name'][0] + '</a></li>'
+            if 'subcategoies' in element:
+                markup_str = categories_to_markup(markup_str, element['subcategoies'])
+        markup_str += '</ul>'
+        return markup_str
+
+    markup = ''
+    markup = categories_to_markup(markup, categories)
+    # current_app.logger.debug(markup)
 
     client = MongoClient('localhost', 27017)
     db = client.store
 
     products_inventory_list = list(db.inventories.find({'category': {'$regex': category_name}}))
     products = []
+
     for product_inventory in products_inventory_list:
         products.append({"id": product_inventory['_id'],
                          "image_link": "https://appiranie.websites.co.in/e-store/img/defaults/product-default.png",
                          "commodity_name": product_inventory['commodity_name'],
                          "price": product_inventory['price']})
 
-    # return category_name
-    return render_template("store/category_page.html", categories=categories, products=products)
-    # test = Markup(f'<a href="{url_for("store.detail", id="5feba1a948c91e7feb6cc488")}">test</a>')
-    # return render_template("store/category_page.html", test=test)
+    return render_template("store/category_page.html",
+                           tree=Markup(markup),
+                           category_name=category_name.split('-')[-1],
+                           products=products)

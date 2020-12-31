@@ -1,0 +1,40 @@
+div#main_div {
+    min-width: 100%;
+    /* display: flex;
+    justify-content: space-between; */
+}
+
+div.right_div,
+div.left_div {
+    min-height: 500px;
+    padding: 1vw 2vw;
+    border: gray solid 1px;
+    border-radius: 10px;
+}
+
+div.right_div {
+    min-width: 33%;
+    /* background-color: aquamarine; */
+    overflow: auto;
+}
+
+div.left_div {
+    min-width: 65%;
+    max-width: 65%;
+    /* background-color: #ffcc00; */
+    overflow: auto;
+}
+
+div.right_div a {
+    text-decoration: none;
+    font-size: 1.4em;
+    color: #444
+}
+
+div.right_div a:hover {
+    color: #c55
+}
+
+div.right_div li {
+    margin: 1vw 0;
+}
