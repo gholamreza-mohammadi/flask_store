@@ -7,6 +7,7 @@ div.product_category_and_cards_container {
 }
 
 div.product_category_and_cards_container > a {
+    padding: 0 1vw;
     font-weight: bold;
     font-size: x-large;
     text-decoration: none;
@@ -20,7 +21,7 @@ div.cards_container {
     overflow: auto;
 }
 
-a.card{
+a.card {
     text-decoration: none;
 }
 

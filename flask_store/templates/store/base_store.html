@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='css_folder/store/base_store.css') }}"/>
-        {% block style_block %}{% endblock %}
-        <title>فروشگاه فلان</title>
-    </head>
-    <body>
-        <header>
-            <div class="title">
-                <img src="{{ url_for('static', filename='assets/images/store.png') }}" alt="" class="icon"/>
-                <h1>فروشگاه فلان</h1>
-            </div>
-            <div class="menu">
-                <a href="{{ url_for('admin.login') }}">مدیریت</a>
-                <a href="">سبد خرید</a>
-            </div>
-        </header>
-        <hr />
-        <main>
-            <!-- <div id="left_div"></div> -->
-            <div id="main_div">{% block main %}{% endblock %}</div>
-            <!-- <div id="right_div"></div> -->
-        </main>
-        <hr />
-        <footer></footer>
-    </body>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/store.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css_folder/store/base_store.css') }}"/>
+    {% block style_block %}{% endblock %}
+    <title>فروشگاه فلان</title>
+</head>
+<body>
+<header>
+    <div onclick="location.href='{{ url_for('store.home') }}';" class="title">
+        <img src="{{ url_for('static', filename='assets/images/store.png') }}" alt="" class="icon"/>
+        <h1>فروشگاه فلان</h1>
+    </div>
+    <div class="menu">
+        <a href="{{ url_for('admin.login') }}">مدیریت</a>
+        <a href="">سبد خرید</a>
+    </div>
+</header>
+<hr/>
+<main>
+    <div id="main_div">{% block main %}{% endblock %}</div>
+</main>
+<hr/>
+<footer></footer>
+</body>
 </html>

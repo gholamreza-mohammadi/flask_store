@@ -1,0 +1,26 @@
+{% extends "store/base_store.html" %}
+
+{% block style_block %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css_folder/store/home_page.css') }}"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css_folder/store/category_page.css') }}"/>
+{% endblock %}
+
+{% block main %}
+<div class="right_div"> {{ tree }} </div>
+<div class="left_div">
+    <h2> {{ category_name }} </h2>
+    <div class="cards_container">
+        {% for product in products %}
+        <a class="card" href="{{ url_for('store.detail', id=product['id']) }}">
+            <div class="card">
+                <img src='{{ product["image_link"] }}'/>
+                <div class="commodity_titles_div">
+                    <h3>{{ product["commodity_name"] }}</h3>
+                    <h4>{{ product["price"] }} تومان</h4>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

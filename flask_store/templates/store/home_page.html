@@ -7,7 +7,7 @@
 {% block main %}
     {% for product in products %}
     <div class="product_category_and_cards_container">
-        <a href="#" class="product_category">{{ product["category"] }}</a>
+        <a href="{{ url_for('store.category', category_name=product['category_full']) }}" class="product_category">{{ product["category"] }}</a>
         <div class="cards_container">
             {% for commodity in product["commodities"] %}
             <a class="card" href="{{ url_for('store.detail', id=commodity['id']) }}">

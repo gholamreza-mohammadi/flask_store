@@ -1,29 +1,30 @@
+img.p_icon {
+    width: 20vw;
+}
 
-div.head{
+div.head {
     display: flex;
 }
 
-img.p_icon{
-    height: 250px;
-    width: 250px;
-}
-
-p.p_category{
+p.p_category {
     font-size: larger;
 }
-div.price{
+
+div.price {
     display: flex;
 }
-div.price span{
+
+div.price span {
     font-size: small;
 }
 
-div.buy button{
+div.buy button {
     background-color: greenyellow;
     padding: 5px;
     margin-right: 20px;
     box-shadow: rgb(3, 40, 6) 3px 3px 5px;
 }
-div.description{
+
+div.description {
     margin-top: 30px;
 }
