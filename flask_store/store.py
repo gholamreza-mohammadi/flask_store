@@ -11,7 +11,8 @@ from flask import Markup
 from pymongo import MongoClient
 from bson import ObjectId
 from . import db
-from .functions import *
+from .functions import categories_to_markup
+
 
 bp = Blueprint("store", __name__)
 
@@ -89,21 +90,7 @@ def category(category_name):
     with open('flask_store/static/json_folder/categories.json', encoding='utf-8') as categories_json:
         categories_dict = json.load(categories_json)
 
-    categories = hierarchical_category_list(categories_dict)
-    # current_app.logger.debug(categories)
-
-    def categories_to_markup(markup_str: str, _categories: list) -> str:
-        markup_str += '<ul>'
-        for element in _categories:
-            markup_str += f'<li><a href="{url_for("store.category", category_name=element["name"][1])}">' + element['name'][0] + '</a></li>'
-            if 'subcategoies' in element:
-                markup_str = categories_to_markup(markup_str, element['subcategoies'])
-        markup_str += '</ul>'
-        return markup_str
-
-    markup = ''
-    markup = categories_to_markup(markup, categories)
-    # current_app.logger.debug(markup)
+    markup = categories_to_markup(categories_dict)
 
     client = MongoClient('localhost', 27017)
     db = client.store
