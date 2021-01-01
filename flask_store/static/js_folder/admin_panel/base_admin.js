@@ -415,10 +415,8 @@ $(function () {
                                                     url: 'set-inventory',
                                                     dataType : 'json',
                                                     data : JSON.stringify({"add_inventory": true,
-                                                                           "inventory_repository": $('select#inventory_repository').find(":selected").text(),
                                                                            "inventory_product_id": products.find(element => element.commodity_name == $('input#inventory_product_name').val())._id,
-                                                                           "inventory_product_image_link": products.find(element => element.commodity_name == $('input#inventory_product_name').val()).image_link,
-                                                                           "inventory_product_name": $('input#inventory_product_name').val(),
+                                                                           "inventory_repository_id": repositories.find(element => element.repository_name == $('select#inventory_repository').find(":selected").text())._id,
                                                                            "inventory_price": $('input#inventory_price').val(),
                                                                            "inventory_quantity": $('input#inventory_quantity').val()})  
                                                 }).always(load_inventory_table);
@@ -450,7 +448,7 @@ $(function () {
                                         var popup = '<div class="popup">';
                                         popup += "<h2>افزودن / ویرایش موجودی:</h2>";
                                         popup += "<h4>نام انبار:</h4>";
-                                        popup += '<select name="inventory_repository" id="inventory_repository">';
+                                        popup += '<select name="edit_inventory_repository" id="edit_inventory_repository">';
                                         repositories.forEach(function (element) {
                                             if (element['repository_name'] == inventory_obj.repository) {
                                                 popup += "<option value=" + element['repository_name'] + " selected>" + element['repository_name'] + "</option>";
@@ -486,10 +484,8 @@ $(function () {
                                                     dataType : 'json',
                                                     data : JSON.stringify({"edit_inventory": true,
                                                                            "inventory_id" : inventory_obj.id,
-                                                                           "inventory_repository": $('select#inventory_repository').find(":selected").text(),
                                                                            "inventory_product_id": products.find(element => element.commodity_name == $('input#edit_inventory_product_name').val())._id,
-                                                                           "inventory_product_image_link": products.find(element => element.commodity_name == $('input#edit_inventory_product_name').val()).image_link,
-                                                                           "inventory_product_name": $('input#edit_inventory_product_name').val(),
+                                                                           "inventory_repository_id": repositories.find(element => element.repository_name == $('select#edit_inventory_repository').find(":selected").text())._id,
                                                                            "inventory_price": $('input#inventory_price').val(),
                                                                            "inventory_quantity": $('input#inventory_quantity').val()})  
                                                 }).always(load_inventory_table);

@@ -8,6 +8,10 @@ db = client.store
 
 
 # =============================products=============================
+def get_product(product_id):
+    return db.products.find_one({"_id": ObjectId(product_id)})
+
+
 def get_products():
     products = list(db.products.find())
     for product in products:
@@ -16,7 +20,7 @@ def get_products():
 
 
 def add_product(data):
-    if not (list(db.products.find({"commodity_name": data['product_name']}))):
+    if not db.products.find_one({"commodity_name": data['product_name']}):
         db.products.insert_one({
             "image_link": data['product_image_link'],
             "commodity_name": data['product_name'],
@@ -27,6 +31,7 @@ def add_product(data):
 
 def delete_product(data):
     db.products.delete_one({"_id": ObjectId(data['product_id'])})
+    db.inventories.delete_many({'commodity_id': data['product_id']})
 
 
 def edit_product(data):
@@ -37,11 +42,22 @@ def edit_product(data):
             'commodity_name': data['product_name'],
             'category': data['product_category'],
             "description": data['product_description']
-        }
-        })
+        }})
+    db.inventories.update_many(
+        {'commodity_id': data['product_id']},
+        {'$set': {
+            "commodity_name": data['product_name'],
+            "commodity_image_link": data['product_image_link'],
+            "commodity_description": data['product_description'],
+            "category": data['product_category']
+        }}
+    )
 
 
 # =============================repositories=============================
+def get_repository(repository_id):
+    return db.repositories.find_one({"_id": ObjectId(repository_id)})
+
 
 def get_repositories():
     repositories = list(db.repositories.find())
@@ -59,14 +75,21 @@ def add_repositories(data):
 
 def delete_repositories(data):
     db.repositories.delete_one({"_id": ObjectId(data['repository_id'])})
+    db.inventories.delete_many({'repository_id': data['repository_id']})
 
 
 def edit_repository(data):
     db.repositories.update_one({"_id": ObjectId(data['repository_id'])},
                                {'$set': {'repository_name': data['repository_name']}})
+    db.inventories.update_many({'repository_id': data['repository_id']},
+                               {'$set': {"repository_name": data['repository_name']}})
 
 
-# =============================repositories=============================
+# =============================inventories=============================
+def get_inventory(inventory_id):
+    return db.inventories.find_one({"_id": ObjectId(inventory_id)})
+
+
 def get_inventories():
     inventories = list(db.inventories.find())
     for inventory in inventories:
@@ -74,25 +97,24 @@ def get_inventories():
     return inventories
 
 
-def get_category(product):
-    return list(db.products.find(
-        {"commodity_name": product},
-        {'_id': 0, 'category': 1}))[0]['category']
-
-
 def add_inventory(data):
-    exist = db.inventories.find({
-        'commodity_name': data['inventory_product_name'],
-        'repository_name': data['inventory_repository']})
-    if not list(exist):
+    exist = db.inventories.find_one({
+        'commodity_id': data['inventory_product_id'],
+        'repository_id': data['inventory_repository_id']
+    })
+    product = get_product(data['inventory_product_id'])
+    repository = get_repository(data['inventory_repository_id'])
+    if not exist and product and repository:
         db.inventories.insert_one({
             "commodity_id": data['inventory_product_id'],
-            "commodity_image_link": data['inventory_product_image_link'],
-            "commodity_name": data['inventory_product_name'],
-            "category": get_category(data['inventory_product_name']),
+            "commodity_name": product['commodity_name'],
+            "commodity_image_link": product['image_link'],
+            "commodity_description": product['description'],
+            "category": product['category'],
             "price": data['inventory_price'],
             "quantity": data['inventory_quantity'],
-            "repository_name": data['inventory_repository'],
+            "repository_id": data['inventory_repository_id'],
+            "repository_name": repository['repository_name'],
             "create_time": datetime.utcnow()
         })
 
@@ -102,21 +124,27 @@ def delete_inventory(data):
 
 
 def edit_inventory(data):
-    db.inventories.update_one(
-        {"_id": ObjectId(data['inventory_id'])},
-        {'$set': {
-            "commodity_id": data['inventory_product_id'],
-            "commodity_image_link": data['inventory_product_image_link'],
-            "commodity_name": data['inventory_product_name'],
-            "category": get_category(data['inventory_product_name']),
-            "price": data['inventory_price'],
-            "quantity": data['inventory_quantity'],
-            "repository_name": data['inventory_repository'],
-            "create_time": datetime.utcnow()
-        }})
+    inventory = get_inventory(data['inventory_id'])
+    product = get_product(data['inventory_product_id'])
+    repository = get_repository(data['inventory_repository_id'])
+    if inventory and product and repository:
+        db.inventories.update_one(
+            {"_id": ObjectId(data['inventory_id'])},
+            {'$set': {
+                "commodity_id": data['inventory_product_id'],
+                "commodity_name": product['commodity_name'],
+                "commodity_image_link": product['image_link'],
+                "commodity_description": product['description'],
+                "category": product['category'],
+                "price": data['inventory_price'],
+                "quantity": data['inventory_quantity'],
+                "repository_id": data['inventory_repository_id'],
+                "repository_name": repository['repository_name'],
+                "create_time": datetime.utcnow()
+            }})
 
 
-# =============================repositories=============================
+# =============================orders=============================
 def get_orders():
     orders = list(db.orders.find())
     for order in orders:

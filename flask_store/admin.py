@@ -58,9 +58,7 @@ def set_inventories():
             db.add_inventory(data)
             current_app.logger.debug('add_inventory')
             current_app.logger.debug(data['inventory_product_id'])
-            current_app.logger.debug(data['inventory_product_image_link'])
-            current_app.logger.debug(data['inventory_product_name'])
-            current_app.logger.debug(data['inventory_repository'])
+            current_app.logger.debug(data['inventory_repository_id'])
             current_app.logger.debug(data['inventory_price'])
             current_app.logger.debug(data['inventory_quantity'])
             return 'add_repository'
@@ -68,10 +66,8 @@ def set_inventories():
             db.edit_inventory(data)
             current_app.logger.debug('edit_inventory')
             current_app.logger.debug(data['inventory_id'])
-            current_app.logger.debug(data['inventory_repository'])
             current_app.logger.debug(data['inventory_product_id'])
-            current_app.logger.debug(data['inventory_product_image_link'])
-            current_app.logger.debug(data['inventory_product_name'])
+            current_app.logger.debug(data['inventory_repository_id'])
             current_app.logger.debug(data['inventory_price'])
             current_app.logger.debug(data['inventory_quantity'])
             return 'edit_inventory'
