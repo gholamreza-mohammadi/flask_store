@@ -82,12 +82,14 @@ def get_category(product):
 
 def add_inventory(data):
     exist = db.inventories.find({
-        'commodity_name': data['inventory_product'],
+        'commodity_name': data['inventory_product_name'],
         'repository_name': data['inventory_repository']})
     if not list(exist):
         db.inventories.insert_one({
-            "commodity_name": data['inventory_product'],
-            "category": get_category(data['inventory_product']),
+            "commodity_id": data['inventory_product_id'],
+            "commodity_image_link": data['inventory_product_image_link'],
+            "commodity_name": data['inventory_product_name'],
+            "category": get_category(data['inventory_product_name']),
             "price": data['inventory_price'],
             "quantity": data['inventory_quantity'],
             "repository_name": data['inventory_repository'],
@@ -103,8 +105,10 @@ def edit_inventory(data):
     db.inventories.update_one(
         {"_id": ObjectId(data['inventory_id'])},
         {'$set': {
-            "commodity_name": data['inventory_product'],
-            "category": get_category(data['inventory_product']),
+            "commodity_id": data['inventory_product_id'],
+            "commodity_image_link": data['inventory_product_image_link'],
+            "commodity_name": data['inventory_product_name'],
+            "category": get_category(data['inventory_product_name']),
             "price": data['inventory_price'],
             "quantity": data['inventory_quantity'],
             "repository_name": data['inventory_repository'],

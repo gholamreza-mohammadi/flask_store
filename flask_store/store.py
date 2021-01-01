@@ -41,7 +41,7 @@ def home():
         products = []
         for p in pp:
             products.append({"id": p['_id'],
-                             "image_link": "https://appiranie.websites.co.in/e-store/img/defaults/product-default.png",
+                             "image_link": p['commodity_image_link'],
                              "commodity_name": p['commodity_name'],
                              "price": p['price']})
         products_category.append({'category': category.split('-')[-1].strip(),
@@ -76,7 +76,7 @@ def category(category_name):
 
     for product_inventory in products_inventory_list:
         products.append({"id": product_inventory['_id'],
-                         "image_link": "https://appiranie.websites.co.in/e-store/img/defaults/product-default.png",
+                         "image_link": product_inventory['commodity_image_link'],
                          "commodity_name": product_inventory['commodity_name'],
                          "price": product_inventory['price']})
 
