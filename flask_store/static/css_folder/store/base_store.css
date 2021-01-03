@@ -48,7 +48,7 @@ div#left_div, div#right_div {
 
 div#main_div {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   flex-wrap: wrap;
   /*   align-items: center; */
   overflow: auto;

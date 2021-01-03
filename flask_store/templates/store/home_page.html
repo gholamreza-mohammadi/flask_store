@@ -6,6 +6,7 @@
 
 {% block main %}
     {% for product in products %}
+    {% if product["commodities"] %}
     <div class="product_category_and_cards_container">
         <a href="{{ url_for('store.category', category_name=product['category_full']) }}" class="product_category">{{ product["category"] }}</a>
         <div class="cards_container">
@@ -22,5 +23,6 @@
             {% endfor %}
         </div>
     </div>
+    {% endif %}
     {% endfor %}
 {% endblock %}
