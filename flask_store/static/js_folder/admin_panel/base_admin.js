@@ -379,6 +379,7 @@ $(function () {
                                 var repositories = response.data;
                                 $.post("get-products", function (response, status) {
                                     if (status == "success") {
+                                        var products = response.data;
                                         var product_names = response.data.map(input => input.commodity_name);
                                         var popup = '<div class="popup">';
                                         popup += "<h2>افزودن / ویرایش موجودی:</h2>";
@@ -389,7 +390,7 @@ $(function () {
                                         });
                                         popup += "</select><br>";
                                         popup += "<h4>نام کالا:</h4>";
-                                        popup += '<input list="datalist_products" type="text" id="inventory_product" name="inventory_product"><br>'; 
+                                        popup += '<input list="datalist_products" type="text" id="inventory_product_name" name="inventory_product_name"><br>'; 
                                         popup += '<datalist id="datalist_products">';
                                         product_names.forEach(function (element) {
                                             popup += '<option value="' + element + '">';
@@ -407,15 +408,15 @@ $(function () {
 
                                         $("a#save_inventory_btn").click(function (event) {
                                             event.preventDefault();
-                                            if (product_names.includes($('input#inventory_product').val()) * $('input#inventory_product').val().length * $('input#inventory_price').val().length * $('input#inventory_quantity').val().length) {
+                                            if (product_names.includes($('input#inventory_product_name').val()) * $('input#inventory_product_name').val().length * $('input#inventory_price').val().length * $('input#inventory_quantity').val().length) {
                                                 $.ajax({
                                                     type: 'POST',
                                                     contentType: 'application/json',
                                                     url: 'set-inventory',
                                                     dataType : 'json',
                                                     data : JSON.stringify({"add_inventory": true,
-                                                                           "inventory_repository": $('select#inventory_repository').find(":selected").text(),
-                                                                           "inventory_product": $('input#inventory_product').val(),
+                                                                           "inventory_product_id": products.find(element => element.commodity_name == $('input#inventory_product_name').val())._id,
+                                                                           "inventory_repository_id": repositories.find(element => element.repository_name == $('select#inventory_repository').find(":selected").text())._id,
                                                                            "inventory_price": $('input#inventory_price').val(),
                                                                            "inventory_quantity": $('input#inventory_quantity').val()})  
                                                 }).always(load_inventory_table);
@@ -442,11 +443,12 @@ $(function () {
                                 var repositories = response.data;
                                 $.post("get-products", function (response, status) {
                                     if (status == "success") {
+                                        var products = response.data;
                                         var product_names = response.data.map(input => input.commodity_name);
                                         var popup = '<div class="popup">';
                                         popup += "<h2>افزودن / ویرایش موجودی:</h2>";
                                         popup += "<h4>نام انبار:</h4>";
-                                        popup += '<select name="inventory_repository" id="inventory_repository">';
+                                        popup += '<select name="edit_inventory_repository" id="edit_inventory_repository">';
                                         repositories.forEach(function (element) {
                                             if (element['repository_name'] == inventory_obj.repository) {
                                                 popup += "<option value=" + element['repository_name'] + " selected>" + element['repository_name'] + "</option>";
@@ -456,7 +458,7 @@ $(function () {
                                         });
                                         popup += "</select><br>";
                                         popup += "<h4>نام کالا:</h4>";
-                                        popup += '<input list="datalist_products" type="text" id="edit_inventory_product" name="edit_inventory_product" value="' + inventory_obj.commodity + '"><br>'; 
+                                        popup += '<input list="datalist_products" type="text" id="edit_inventory_product_name" name="edit_inventory_product_name" value="' + inventory_obj.commodity + '"><br>'; 
                                         popup += '<datalist id="datalist_products">';
                                         product_names.forEach(function (element) {
                                             popup += '<option value="' + element + '">';
@@ -474,7 +476,7 @@ $(function () {
 
                                         $("a#save_inventory_btn").click(function (event) {
                                             event.preventDefault();
-                                            if (product_names.includes($('input#edit_inventory_product').val()) * $('input#edit_inventory_product').val().length * $('input#inventory_price').val().length * $('input#inventory_quantity').val().length) {
+                                            if (product_names.includes($('input#edit_inventory_product_name').val()) * $('input#edit_inventory_product_name').val().length * $('input#inventory_price').val().length * $('input#inventory_quantity').val().length) {
                                                 $.ajax({
                                                     type: 'POST',
                                                     contentType: 'application/json',
@@ -482,8 +484,8 @@ $(function () {
                                                     dataType : 'json',
                                                     data : JSON.stringify({"edit_inventory": true,
                                                                            "inventory_id" : inventory_obj.id,
-                                                                           "inventory_repository": $('select#inventory_repository').find(":selected").text(),
-                                                                           "inventory_product": $('input#edit_inventory_product').val(),
+                                                                           "inventory_product_id": products.find(element => element.commodity_name == $('input#edit_inventory_product_name').val())._id,
+                                                                           "inventory_repository_id": repositories.find(element => element.repository_name == $('select#edit_inventory_repository').find(":selected").text())._id,
                                                                            "inventory_price": $('input#inventory_price').val(),
                                                                            "inventory_quantity": $('input#inventory_quantity').val()})  
                                                 }).always(load_inventory_table);

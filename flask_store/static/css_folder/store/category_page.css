@@ -1,7 +1,5 @@
 div#main_div {
     min-width: 100%;
-    /* display: flex;
-    justify-content: space-between; */
 }
 
 div.right_div,
@@ -14,14 +12,12 @@ div.left_div {
 
 div.right_div {
     min-width: 33%;
-    /* background-color: aquamarine; */
     overflow: auto;
 }
 
 div.left_div {
     min-width: 65%;
     max-width: 65%;
-    /* background-color: #ffcc00; */
     overflow: auto;
 }
 
@@ -32,7 +28,7 @@ div.right_div a {
 }
 
 div.right_div a:hover {
-    color: #c55
+    color: #c55;
 }
 
 div.right_div li {

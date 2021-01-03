@@ -6,8 +6,15 @@ div.head {
     display: flex;
 }
 
-p.p_category {
+a.p_category {
     font-size: larger;
+
+    text-decoration: none;
+    color: black;
+}
+
+a.p_category:hover {
+    color: #c55;
 }
 
 div.price {

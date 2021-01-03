@@ -45,27 +45,6 @@ def get_orders():
     if request.method == "POST":
         orders = {"column_names": ["id", "user_name", "total_price", "order_time"],
                   'data': db.get_orders()}
-        #       {"id": 4000,
-        #        "user_name": "اکبر زمانی",
-        #        "total_price": 920000,
-        #        "order_time": '1399/01/05'},
-        #       {"id": 4001,
-        #        "user_name": "رامین رحیمی",
-        #        "total_price": 8764300,
-        #        "order_time": '1399/01/04'},
-        #       {"id": 4002,
-        #        "user_name": "ملیکا زارعی",
-        #        "total_price": 3324000,
-        #        "order_time": '1399/01/03'},
-        #       {"id": 4003,
-        #        "user_name": "نیکی کریمی",
-        #        "total_price": 1258000,
-        #        "order_time": '1399/01/02'},
-        #       {"id": 4004,
-        #        "user_name": "فریبرز عربنیا",
-        #        "total_price": 540000,
-        #        "order_time": '1399/01/01'}
-        #   ]}
         return orders
     else:
         abort(404)
@@ -78,8 +57,8 @@ def set_inventories():
         if 'add_inventory' in data:
             db.add_inventory(data)
             current_app.logger.debug('add_inventory')
-            current_app.logger.debug(data['inventory_repository'])
-            current_app.logger.debug(data['inventory_product'])
+            current_app.logger.debug(data['inventory_product_id'])
+            current_app.logger.debug(data['inventory_repository_id'])
             current_app.logger.debug(data['inventory_price'])
             current_app.logger.debug(data['inventory_quantity'])
             return 'add_repository'
@@ -87,8 +66,8 @@ def set_inventories():
             db.edit_inventory(data)
             current_app.logger.debug('edit_inventory')
             current_app.logger.debug(data['inventory_id'])
-            current_app.logger.debug(data['inventory_repository'])
-            current_app.logger.debug(data['inventory_product'])
+            current_app.logger.debug(data['inventory_product_id'])
+            current_app.logger.debug(data['inventory_repository_id'])
             current_app.logger.debug(data['inventory_price'])
             current_app.logger.debug(data['inventory_quantity'])
             return 'edit_inventory'
@@ -109,34 +88,6 @@ def get_inventories():
         inventories = {"column_names": ["_id", "repository_name", "commodity_name", "price", "quantity"],
                        'data': db.get_inventories()
                        }
-        # inventories = {"column_names": ["id", "repository_name", "commodity_name", "price", "quantity"],
-        #                'data': [
-        #                    {"id": 3000,
-        #                     "repository_name": "انبار شماره ۱",
-        #                     "commodity_name": "لوبیا قرمز 900 گرمی گلستان",
-        #                     "price": 200000,
-        #                     "quantity": 100},
-        #                    {"id": 3001,
-        #                     "repository_name": "انبار شماره ۱",
-        #                     "commodity_name": "روغن مخصوص سرخ کردنی بدون پالم 2000 میلی لیتری اویلا",
-        #                     "price": 10000,
-        #                     "quantity": 200},
-        #                    {"id": 3002,
-        #                     "repository_name": "انبار شماره ۲",
-        #                     "commodity_name": "روغن مایع آفتابگردان ویتامینه 1800 میلی لیتری غنچه",
-        #                     "price": 150000,
-        #                     "quantity": 300},
-        #                    {"id": 3003,
-        #                     "repository_name": "انبار شماره ۲",
-        #                     "commodity_name": "کره سنتی ۱۰۰ گرمی شکلی",
-        #                     "price": 25500,
-        #                     "quantity": 400},
-        #                    {"id": 3004,
-        #                     "repository_name": "انبار شماره ۳",
-        #                     "commodity_name": "پودر قهوه دم کردنی اسپرسو 250 گرمی لاواتزا",
-        #                     "price": 1000000,
-        #                     "quantity": 500}
-        #                ]}
         return inventories
     else:
         abort(404)
@@ -174,12 +125,6 @@ def get_repositories():
         repositories = db.get_repositories()
         repositories = {"column_names": ["_id", "repository_name"],
                         'data': repositories}
-        # repositories = {"column_names": ["id", "repository_name"],
-        #                 'data': [
-        #                     {"id": 2000, "repository_name": "انبار شماره ۱"},
-        #                     {"id": 2001, "repository_name": "انبار شماره ۲"},
-        #                     {"id": 2002, "repository_name": "انبار شماره ۳"}
-        #                 ]}
         return repositories
     else:
         abort(404)
@@ -245,29 +190,6 @@ def get_products():
             "column_names": ["_id", "image_link", "commodity_name", "category", "description"],
             "data": products
         }
-        # products = {
-        #     "column_names": ["id", "image_link", "commodity_name", "category"],
-        #     "data": [{"id": 1000,
-        #               "image_link": "https://www.ibiar.com/images/6261107003705-256.jpg",
-        #               "commodity_name": "لوبیا قرمز 900 گرمی گلستان",
-        #               "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
-        #              {"id": 1001,
-        #               "image_link": "https://onemarketco.ir/wp-content/uploads/8083FA0D-46D9-4EC1-B53C-3DD7E7365400.jpeg",
-        #               "commodity_name": "روغن مخصوص سرخ کردنی بدون پالم 2000 میلی لیتری اویلا",
-        #               "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
-        #              {"id": 1002,
-        #               "image_link": "https://onemarketco.ir/wp-content/uploads/6EDDF87E-A388-4965-906D-3B63270AB958.jpeg",
-        #               "commodity_name": "روغن مایع آفتابگردان ویتامینه 1800 میلی لیتری غنچه",
-        #               "category": "مواد غذایی / کالاهای اساسی و خوار و بار"},
-        #              {"id": 1003,
-        #               "image_link": "https://www.ibiar.com/images/6260063200845-256.jpg",
-        #               "commodity_name": "کره سنتی ۱۰۰ گرمی شکلی",
-        #               "category": "مواد غذایی / لبنیات"},
-        #              {"id": 1004,
-        #               "image_link": "https://www.ibiar.com/images/8000070018686-256.jpg",
-        #               "commodity_name": "پودر قهوه دم کردنی اسپرسو 250 گرمی لاواتزا",
-        #               "category": "مواد غذایی / نوشیدنی"}]
-        # }
         return products
     else:
         abort(404)
