@@ -42,6 +42,7 @@ div.card:hover {
 
 div.card > img {
     width: 150px;
+    height: 150px;
 }
 
 div.commodity_titles_div{

@@ -9,7 +9,7 @@
 <div>
 <div class="head">
     <div class="img">
-        <img class="p_icon" src="{{commodity['image_link']}}" alt="">
+        <img class="p_icon" src="{{commodity['commodity_image_link']}}" alt="">
     </div>
     <div class="detail">
         <h1 class="p_name">{{ commodity["commodity_name"] }}</h1>
@@ -18,6 +18,6 @@
         <div class="buy"><input type="number" id="quantity" name="quantity" min="1" max="5"><button>افزودن به سبد خرید</button></div>
     </div>
 </div>
-<div class="description">{{ commodity['description'] }}</div>
+<div class="description">{{ commodity['commodity_description'] }}</div>
 </div>
 {% endblock %}

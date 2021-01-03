@@ -2,7 +2,7 @@
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import datetime
-from flask import current_app
+from flask import current_app,url_for
 
 client = MongoClient('localhost', 27017)
 db = client.store
@@ -22,8 +22,11 @@ def get_products():
 
 def add_product(data):
     if not db.products.find_one({"commodity_name": data['product_name']}):
+        img_link = data['product_image_link']
+        if not img_link:
+            img_link = url_for('static', filename='assets/images/product-default.png')
         db.products.insert_one({
-            "image_link": data['product_image_link'],
+            "image_link": img_link,
             "commodity_name": data['product_name'],
             "category": data['product_category'],
             "description": data['product_description']
@@ -36,10 +39,13 @@ def delete_product(data):
 
 
 def edit_product(data):
+    img_link = data['product_image_link']
+    if not img_link:
+        img_link = url_for('static', filename='assets/images/product-default.png')
     db.products.update_one(
         {"_id": ObjectId(data['product_id'])},
         {'$set': {
-            "image_link": data['product_image_link'],
+            "image_link": img_link,
             'commodity_name': data['product_name'],
             'category': data['product_category'],
             "description": data['product_description']
@@ -48,7 +54,7 @@ def edit_product(data):
         {'commodity_id': data['product_id']},
         {'$set': {
             "commodity_name": data['product_name'],
-            "commodity_image_link": data['product_image_link'],
+            "commodity_image_link": img_link,
             "commodity_description": data['product_description'],
             "category": data['product_category']
         }}

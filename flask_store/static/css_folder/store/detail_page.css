@@ -6,6 +6,9 @@ div.head {
     display: flex;
 }
 
+div.detail{
+    margin-right: 30px;
+}
 a.p_category {
     font-size: larger;
 
@@ -27,7 +30,7 @@ div.price span {
 
 div.buy button {
     background-color: greenyellow;
-    padding: 5px;
+    padding: 10px 20px;
     margin-right: 20px;
     box-shadow: rgb(3, 40, 6) 3px 3px 5px;
 }
