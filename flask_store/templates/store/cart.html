@@ -23,15 +23,15 @@
     {% for product in products %}
       <tr>
         <th scope="row" class="ps-5">{{ product["name"] }}</th>
-        <td>{{ product["price"] }}</td>
+        <td>{{ product['price'] }}</td>
         <td>{{ product["quantity"] }}</td>
-        <td>حذف</td>
+        <td><a href="" class="delete_a" id="{{ product['inventory_id'] }}">حذف</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table></div>
   <div class="d-flex justify-content-around w-50%">
-  <p>جمع: <span>122000</span></p>
+  <p> جمع: <span> {{ total_price }} </span></p>
   <button type="button" class="btn btn-success shadow">نهایی کردن سبدخرید</button>
   </div></div>
 {% endblock %}

@@ -113,7 +113,8 @@ def cart():
     shopping_list = session.get('shopping_list')
     if shopping_list:
         shopping_detail = db.get_shopping_inventories(shopping_list)
-    return render_template("store/cart.html", products=shopping_detail)
+    total_price = sum([float(shop['price']) * float(shop['quantity']) for shop in shopping_detail])
+    return render_template("store/cart.html", products=shopping_detail, total_price=total_price)
 
 
 @bp.route("/final")
