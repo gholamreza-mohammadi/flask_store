@@ -1,0 +1,35 @@
+{% extends "store/base_store.html" %}
+
+{% block style_block %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename='css_folder/store/detail_page.css') }}"/> 
+{% endblock %}
+
+{% block main %}
+<h3 class="">نهایی کردن سبد خرید</h3>
+<div class="d-flex flex-wrap">
+    <div class="mx-3 w-25">
+        <p>نام</p>
+        <input type="text" class="w-100" name="" id="">
+    </div>
+    <div class="mx-3 w-25">
+        <p>نام خانوادگی</p>
+        <input type="text" class="w-100" name="" id="">
+    </div>
+    <div class="mx-3 w-25">
+        <p>ادرس</p>
+        <textarea name="" id="" class="w-100" cols="30" rows="2"></textarea>
+    </div>
+    <div class="mx-3 w-25">
+        <p>تلفن همراه</p>
+        <input type="text" class="w-100" name="" id="">
+    </div>
+    <div class="mx-3 w-25">
+        <p>تاریخ تحویل</p>
+        <input type="text" class="w-100" name="" id="">
+    </div>
+</div>
+<div class="d-flex justify-content-center mt-4 vw-100">
+<button type="button" class="btn btn-success shadow"> ثبت نهایی سفارش</button>
+</div>
+{% endblock %}
