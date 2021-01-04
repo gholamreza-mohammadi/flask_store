@@ -74,6 +74,10 @@ div.popup {
     border-radius: 10px;
 }
 
+div.order_div {
+    width: 50vw;
+}
+
 div.popup > * {
     margin: 10px 20px;
 }

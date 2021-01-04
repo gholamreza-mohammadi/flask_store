@@ -40,12 +40,61 @@ def management():
         abort(404)
 
 
-@bp.route("/order-api", methods=["POST", "GET"])
+@bp.route("/get-order", methods=["POST", "GET"])
 def get_orders():
     if request.method == "POST":
+        # orders = {"column_names": ["id", "user_name", "total_price", "order_time"],
+        #           'data': db.get_orders()}
         orders = {"column_names": ["id", "user_name", "total_price", "order_time"],
-                  'data': db.get_orders()}
+                  'data': [
+                      {
+                          "id": "5feace5898652baae6f775d0",
+                          "user_name": "اکبر زمانی",
+                          "total_price": 920000,
+                          "order_time": "1399/01/05"
+                      },
+                      {
+                          "id": "5feace5898652baae6f775d1",
+                          "user_name": "رامین رحیمی",
+                          "total_price": 8764300,
+                          "order_time": "1399/01/04"
+                      },
+                      {
+                          "id": "5feace5898652baae6f775d2",
+                          "user_name": "ملیکا زارعی",
+                          "total_price": 3324000,
+                          "order_time": "1399/01/03"
+                      },
+                      {
+                          "id": "5feace5898652baae6f775d3",
+                          "user_name": "نیکی کریمی",
+                          "total_price": 1258000,
+                          "order_time": "1399/01/02"
+                      }, {
+                          "id": "5feace5898652baae6f775d4",
+                          "user_name": "فریبرز عربنیا",
+                          "total_price": 540000,
+                          "order_time": "1399/01/01"
+                      }
+                  ]}
         return orders
+    else:
+        abort(404)
+
+
+@bp.route("/get-order-detail", methods=["POST", "GET"])
+def get_order_details():
+    if request.method == "POST":
+        data = request.get_json()
+        current_app.logger.debug(data['order_id'])
+        # detail = db.get_order_details()
+        return {
+            'user_name': "فریبرز عربنیا",
+            'address': 'تهران، بزرگراه شهید چمران، خیابان یمن،ميدان شهيد شهرياری، بلوار دانشجو',
+            'phone': "0912345678",
+            'resive_time': "1399/01/03",
+            'order_time': "1399/01/01"
+        }
     else:
         abort(404)
 

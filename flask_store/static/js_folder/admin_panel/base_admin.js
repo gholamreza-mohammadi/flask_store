@@ -525,7 +525,7 @@ $(function () {
 
     $("a#order").click(function (event) {
         event.preventDefault();
-        $.post("order-api", function (response, status) {
+        $.post("get-order", function (response, status) {
             data_div_cleaner();
             if (status == "success") {
                 var header = "<h2>مدیریت سفارش‌ها</h2>";
@@ -546,14 +546,58 @@ $(function () {
                     table += "<td>" + element[column_names[2]] + "</td>";
                     table += "<td>" + element[column_names[3]] + "</td>";
 
-                    table += '<td><a href="#" class="order_detail" id="order_detail_' + element[column_names[0]] + '">بررسی سفارش</a></td>';
-                    orders_obj['order_detail_' + element[column_names[0]]] = element[column_names[0]];
+                    table += '<td><a href="" class="order_detail" id="order_detail_' + element[column_names[0]] + '">بررسی سفارش</a></td>';
+                    orders_obj['order_detail_' + element[column_names[0]]] = {
+                        'id': element[column_names[0]]
+                    };
                     table += "</tr>";
                 });
                 table += "</table>";
 
                 $("div#header_div").append(header);
                 $("div#table_div").append(table);
+
+                $("a.order_detail").click(function (event) {
+                    event.preventDefault();
+                    var order_obj = orders_obj[$(this).attr("id")];
+                    $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json',
+                        url: 'get-order-detail',
+                        dataType : 'json',
+                        data : JSON.stringify({"order_detail": true,
+                                               "order_id": order_obj.id})  
+                    }).done(function (data) {
+                        var popup = '<div class="popup order_div">';
+                        popup += "<h4>نمایش سفارش</h4>";
+                        popup += '<div class="table_div">';
+                        popup += '<div class="table_div_row">';
+                        popup += '<div class="table_div_col">نام مشتری:</div>';
+                        popup += '<div class="table_div_col">' + data.user_name + '</div>';
+                        popup += '</div>';
+                        popup += '<div class="table_div_row">';
+                        popup += '<div class="table_div_col">آدرس:</div>';
+                        popup += '<div class="table_div_col">' + data.address + '</div>';
+                        popup += '</div>';
+                        popup += '<div class="table_div_row">';
+                        popup += '<div class="table_div_col">تلفن:</div>';
+                        popup += '<div class="table_div_col">' + data.phone + '</div>';
+                        popup += '</div>';
+                        popup += '<div class="table_div_row">';
+                        popup += '<div class="table_div_col">زمان تحویل:</div>';
+                        popup += '<div class="table_div_col">' + data.resive_time + '</div>';
+                        popup += '</div>';
+                        popup += '<div class="table_div_row">';
+                        popup += '<div class="table_div_col">زمان سفارش:</div>';
+                        popup += '<div class="table_div_col">' + data.order_time + '</div>';
+                        popup += '</div>';
+                        popup += '</div>';
+                        popup += "</div>";
+                        $("div#popup_div").append(popup);
+                        $("div.popup").lightbox_me();
+                    });   
+                });
+
             } else {
                 alert("Error in received data.");
             }
