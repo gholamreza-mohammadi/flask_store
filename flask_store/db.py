@@ -103,6 +103,20 @@ def get_inventories():
     return inventories
 
 
+def get_shopping_inventories(shopping_list):
+    shopping_detail = []
+    if shopping_list:
+        for key, value in shopping_list.items():
+            inventory = db.inventories.find_one({"_id": ObjectId(key)})
+            shopping_detail.append(
+                {'inventory_id': str(inventory['_id']),
+                 'name': inventory['commodity_name'],
+                 'price': inventory['price'],
+                 'quantity': value}
+            )
+        return shopping_detail
+
+
 def add_inventory(data):
     exist = db.inventories.find_one({
         'commodity_id': data['inventory_product_id'],

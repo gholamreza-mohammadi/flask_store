@@ -13,8 +13,21 @@ from bson import ObjectId
 from . import db
 from .functions import categories_to_markup
 
-
 bp = Blueprint("store", __name__)
+
+
+# @bp.before_app_request
+# def load_logged_in_user():
+#     """If a user id is stored in the session, load the user object from
+#     the database into ``g.user``."""
+#     user_id = session.get("user_id")
+#
+#     if user_id is None:
+#         g.user = None
+#     else:
+#         g.user = (
+#             get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
+#         )
 
 
 @bp.route("/", methods=["GET", "POST"])
@@ -50,12 +63,23 @@ def home():
     return render_template("store/home_page.html", products=products_category)
 
 
-@bp.route("/product/<id>")
+@bp.route("/product/<id>", methods=["GET", "POST"])
 def detail(id):
+    current_app.logger.debug(session.get('shopping_list'))
     client = MongoClient('localhost', 27017)
     db = client.store
-    commodity = list(db.inventories.find({'_id': ObjectId(id)}))[0]
-    return render_template("store/detail_page.html", commodity=commodity)
+    commodity = db.inventories.find_one({'_id': ObjectId(id)})
+    if request.method == "POST":
+        if 'shopping_list' not in session:
+            session['shopping_list'] = {}
+        session['shopping_list'][id] = request.form["quantity"]
+        session.modified = True
+        return redirect(url_for('store.detail', id=id))
+    else:
+        qty = 0
+        if 'shopping_list' in session and id in session['shopping_list']:
+            qty = session['shopping_list'][id]
+        return render_template("store/detail_page.html", commodity=commodity, qty=qty)
 
 
 @bp.route("/category/<category_name>")
@@ -85,22 +109,15 @@ def category(category_name):
 
 @bp.route("/cart")
 def cart():
-    products = [
-        {'name': 'روغن سرخ کردنی',
-         'price': 2300,
-         'quantity': 20
-         },
-        {'name': 'کره سنتی',
-         'price': 2300,
-         'quantity': 20
-         },
-        {'name': 'قهوه اسپرسو',
-         'price': 2300,
-         'quantity': 20
-         },
-    ]
-    return render_template("store/cart.html",products=products)
+    shopping_detail = []
+    shopping_list = session.get('shopping_list')
+    if shopping_list:
+        shopping_detail = db.get_shopping_inventories(shopping_list)
+    return render_template("store/cart.html", products=shopping_detail)
 
-@bp.route("/ff")
+
+@bp.route("/final")
 def finalize():
+    if 'shopping_list' in session:
+        session.pop('shopping_list', None)
     return render_template("store/finalize.html")
