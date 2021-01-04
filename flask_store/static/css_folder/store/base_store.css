@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-body {
+body.test {
     width: 80vw;
     margin: 1vw auto;
     direction: rtl;

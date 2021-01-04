@@ -81,3 +81,26 @@ def category(category_name):
                            tree=Markup(markup),
                            category_name=category_name.split('-')[-1],
                            products=products)
+
+
+@bp.route("/cart")
+def cart():
+    products = [
+        {'name': 'روغن سرخ کردنی',
+         'price': 2300,
+         'quantity': 20
+         },
+        {'name': 'کره سنتی',
+         'price': 2300,
+         'quantity': 20
+         },
+        {'name': 'قهوه اسپرسو',
+         'price': 2300,
+         'quantity': 20
+         },
+    ]
+    return render_template("store/cart.html",products=products)
+
+@bp.route("/ff")
+def finalize():
+    return render_template("store/finalize.html")
