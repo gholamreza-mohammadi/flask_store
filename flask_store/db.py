@@ -1,8 +1,7 @@
-  
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import datetime
-from flask import current_app,url_for
+from flask import current_app, url_for
 
 client = MongoClient('localhost', 27017)
 db = client.store
