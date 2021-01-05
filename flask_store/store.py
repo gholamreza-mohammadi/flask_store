@@ -117,8 +117,31 @@ def cart():
     return render_template("store/cart.html", products=shopping_detail, total_price=total_price)
 
 
-@bp.route("/final")
+@bp.route("/final", methods=["GET", "POST"])
 def finalize():
-    if 'shopping_list' in session:
+    current_app.logger.debug('finalll')
+    if 'shopping_list' not in session:
+        session['shopping_list'] = {}
+    if request.method == "POST":
+        current_app.logger.debug('in post')
+        client = MongoClient('localhost', 27017)
+        database = client.store
+        database.orders.insert_one({
+                "user_name": request.form['user_name'],
+                "total_price": 540000,
+                "order_time": "1399/01/01",
+                "resive_time": request.form['resive_time'],
+                "address": request.form['address'],
+                "phone": request.form['phone'],
+                "products": db.get_detail_finalize_shopping(session.get('shopping_list'))   
+        })
         session.pop('shopping_list', None)
-    return render_template("store/finalize.html")
+        return redirect(url_for('store.home'))
+    else:
+        current_app.logger.debug('in get')
+        disabled = ""
+        if not session['shopping_list']:
+            disabled = 'disabled'
+        return render_template("store/finalize.html",disabled=disabled)
+#     if 'shopping_list' in session:
+#         session.pop('shopping_list', None)

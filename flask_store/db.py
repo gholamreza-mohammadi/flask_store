@@ -115,6 +115,23 @@ def get_shopping_inventories(shopping_list):
                  'quantity': value}
             )
         return shopping_detail
+    
+def get_detail_finalize_shopping(shopping_list):
+    shopping_detail = []
+    if shopping_list:
+        for key, value in shopping_list.items():
+            inventory = db.inventories.find_one({"_id": ObjectId(key)})
+            shopping_detail.append(
+                {'inventory_id': str(inventory['_id']),
+                'commodity_name': inventory['commodity_name'],
+                'price': inventory['price'],
+                'commodity_id': inventory['commodity_id'],
+                'repository_id': inventory['repository_id'],
+                'repository_name': inventory['repository_name'],
+                'quantity': value}
+            )
+        return shopping_detail
+        
 
 
 def add_inventory(data):

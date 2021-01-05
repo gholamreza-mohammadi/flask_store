@@ -32,6 +32,6 @@
   </table></div>
   <div class="d-flex justify-content-around w-50%">
   <p> جمع: <span> {{ total_price }} </span></p>
-  <button type="button" class="btn btn-success shadow">نهایی کردن سبدخرید</button>
+  <button type="button" class="btn btn-success shadow" onclick="location.href='{{ url_for('store.finalize') }}';">نهایی کردن سبدخرید</button>
   </div></div>
 {% endblock %}
