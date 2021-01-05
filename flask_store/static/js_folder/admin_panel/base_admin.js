@@ -569,32 +569,55 @@ $(function () {
                                                "order_id": order_obj.id})  
                     }).done(function (data) {
                         var popup = '<div class="popup order_div">';
-                        popup += "<h4>نمایش سفارش</h4>";
-                        popup += '<div class="table_div">';
-                        popup += '<div class="table_div_row">';
-                        popup += '<div class="table_div_col">نام مشتری:</div>';
-                        popup += '<div class="table_div_col">' + data.user_name + '</div>';
-                        popup += '</div>';
-                        popup += '<div class="table_div_row">';
-                        popup += '<div class="table_div_col">آدرس:</div>';
-                        popup += '<div class="table_div_col">' + data.address + '</div>';
-                        popup += '</div>';
-                        popup += '<div class="table_div_row">';
-                        popup += '<div class="table_div_col">تلفن:</div>';
-                        popup += '<div class="table_div_col">' + data.phone + '</div>';
-                        popup += '</div>';
-                        popup += '<div class="table_div_row">';
-                        popup += '<div class="table_div_col">زمان تحویل:</div>';
-                        popup += '<div class="table_div_col">' + data.resive_time + '</div>';
-                        popup += '</div>';
-                        popup += '<div class="table_div_row">';
-                        popup += '<div class="table_div_col">زمان سفارش:</div>';
-                        popup += '<div class="table_div_col">' + data.order_time + '</div>';
-                        popup += '</div>';
-                        popup += '</div>';
+                            popup += "<h4>نمایش سفارش</h4>";
+                            popup += '<div class="my_table_div">';
+                                popup += '<div class="table_div_row">';
+                                    popup += '<div class="table_div_col">نام مشتری:</div>';
+                                    popup += '<div class="table_div_col">' + data.user_name + '</div>';
+                                popup += '</div>';
+                                popup += '<div class="table_div_row">';
+                                    popup += '<div class="table_div_col">آدرس:</div>';
+                                    popup += '<div class="table_div_col">' + data.address + '</div>';
+                                popup += '</div>';
+                                popup += '<div class="table_div_row">';
+                                    popup += '<div class="table_div_col">تلفن:</div>';
+                                    popup += '<div class="table_div_col">' + data.phone + '</div>';
+                                popup += '</div>';
+                                popup += '<div class="table_div_row">';
+                                    popup += '<div class="table_div_col">زمان تحویل:</div>';
+                                    popup += '<div class="table_div_col">' + data.resive_time + '</div>';
+                                popup += '</div>';
+                                popup += '<div class="table_div_row">';
+                                    popup += '<div class="table_div_col">زمان سفارش:</div>';
+                                    popup += '<div class="table_div_col">' + data.order_time + '</div>';
+                                popup += '</div>';
+                            popup += '</div>';
+                            popup += "<table>";
+                                popup += "<tr>";
+                                    popup += "<th>" + "کالا" + "</th>";
+                                    popup += "<th>" + "قیمت" + "</th>";
+                                    popup += "<th>" + "انبار" + "</th>";
+                                    popup += "<th>" + "تعداد" + "</th>";
+                                popup += "</tr>";
+                                data.products.forEach(function (product) {
+                                    popup += "<tr>";
+                                        popup += "<td>" + product.commodity_name + "</td>";
+                                        popup += "<td>" + product.price + "</td>";
+                                        popup += "<td>" + product.repository_name + "</td>";
+                                        popup += "<td>" + product.quantity + "</td>";
+                                    popup += "</tr>";
+                                })
+                            popup += "</table>";
+                            popup += '<button id="close_btn">بستن</button>';
                         popup += "</div>";
+
                         $("div#popup_div").append(popup);
                         $("div.popup").lightbox_me();
+                        
+                        $("button#close_btn").click(function (event) {
+                            event.preventDefault();
+                            $("div.popup").trigger('close');
+                        });
                     });   
                 });
 

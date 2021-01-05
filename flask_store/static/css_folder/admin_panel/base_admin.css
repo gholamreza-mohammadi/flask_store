@@ -26,7 +26,6 @@ div.menu > a {
     box-shadow: 2px 2px 3px #999;
     padding: 5px 10px;
     margin: 0 1px;
-    height: fit-content;
     text-decoration: none;
     display: inline-block;
     height: 2em;
@@ -74,10 +73,6 @@ div.popup {
     border-radius: 10px;
 }
 
-div.order_div {
-    width: 50vw;
-}
-
 div.popup > * {
     margin: 10px 20px;
 }
@@ -109,4 +104,18 @@ input.input_number {
 
 input.product_image_link {
     direction: ltr;
+}
+
+div.order_div {
+    width: 50vw;
+}
+
+div.order_div > table {
+    max-width: 90%;
+    margin: 10px auto;
+}
+
+div.order_div > button {
+    margin: 10px 45%;
+    width: 10%;
 }

@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timedelta
 from flask import Blueprint
 from flask import request
 from flask import render_template
@@ -14,20 +15,6 @@ from . import db
 from .functions import categories_to_markup
 
 bp = Blueprint("store", __name__)
-
-
-# @bp.before_app_request
-# def load_logged_in_user():
-#     """If a user id is stored in the session, load the user object from
-#     the database into ``g.user``."""
-#     user_id = session.get("user_id")
-#
-#     if user_id is None:
-#         g.user = None
-#     else:
-#         g.user = (
-#             get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
-#         )
 
 
 @bp.route("/", methods=["GET", "POST"])
@@ -109,39 +96,50 @@ def category(category_name):
 
 @bp.route("/cart")
 def cart():
-    shopping_detail = []
-    shopping_list = session.get('shopping_list')
+    shopping_detail, shopping_list = [], session.get('shopping_list')
     if shopping_list:
         shopping_detail = db.get_shopping_inventories(shopping_list)
-    total_price = sum([float(shop['price']) * float(shop['quantity']) for shop in shopping_detail])
+    total_price = sum([int(shop['price']) * int(shop['quantity']) for shop in shopping_detail])
     return render_template("store/cart.html", products=shopping_detail, total_price=total_price)
 
 
 @bp.route("/final", methods=["GET", "POST"])
 def finalize():
-    current_app.logger.debug('finalll')
     if 'shopping_list' not in session:
         session['shopping_list'] = {}
     if request.method == "POST":
-        current_app.logger.debug('in post')
         client = MongoClient('localhost', 27017)
         database = client.store
+        products = db.get_detail_finalize_shopping(session.get('shopping_list'))
+        total_price = sum([int(product['price']) * int(product['quantity']) for product in products])
         database.orders.insert_one({
-                "user_name": request.form['user_name'],
-                "total_price": 540000,
-                "order_time": "1399/01/01",
-                "resive_time": request.form['resive_time'],
-                "address": request.form['address'],
-                "phone": request.form['phone'],
-                "products": db.get_detail_finalize_shopping(session.get('shopping_list'))   
+            "user_name": request.form['user_name'],
+            "total_price": total_price,
+            "order_time": datetime.now(),
+            "resive_time":  datetime.strptime(request.form['resive_time'], '%Y-%m-%d'),
+            "address": request.form['address'],
+            "phone": request.form['phone'],
+            "products": products
         })
         session.pop('shopping_list', None)
         return redirect(url_for('store.home'))
     else:
-        current_app.logger.debug('in get')
-        disabled = ""
-        if not session['shopping_list']:
-            disabled = 'disabled'
-        return render_template("store/finalize.html",disabled=disabled)
-#     if 'shopping_list' in session:
-#         session.pop('shopping_list', None)
+        today = datetime.now().date()
+        my_date = []
+        for i in range(1, 32):
+            my_date.append(today + timedelta(days=i))
+        return render_template("store/finalize.html", date=my_date,
+                               disabled='' if session['shopping_list'] else 'disabled')
+
+
+@bp.route("/change-shopping-list", methods=["POST", "GET"])
+def change_shopping_list():
+    if request.method == "POST":
+        data = request.get_json()
+        if data['id'] in session['shopping_list']:
+            del session['shopping_list'][data['id']]
+            session.modified = True
+            return 'deleted'
+        return 'fail'
+    else:
+        abort(404)

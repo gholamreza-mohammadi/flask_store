@@ -18,9 +18,11 @@
             <div class="price"><h2>{{ commodity["price"] }}<span class=""> تومان </span></h2></div>
             <div class="buy">
                 <form method="POST">
-                    <input type="number" id="quantity" name="quantity" min="1" max="{{ commodity['quantity'] }}" value="{{ qty }}">
-                    <input type="submit">افزودن به سبد خرید
-                    <img src="{{ url_for('static', filename='assets/images/add_icon.png') }}" alt=""></input>
+                    <input type="number" id="quantity" name="quantity" min="1" max="{{ commodity['quantity'] }}"
+                           value="{{ qty }}">
+                    <button type="submit" class="btn btn-success shadow"> افزودن به سبد خرید
+                        <img src="{{ url_for('static', filename='assets/images/add_icon.png') }}" alt="">
+                    </button>
                 </form>
             </div>
         </div>

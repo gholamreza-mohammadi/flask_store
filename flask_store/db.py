@@ -115,23 +115,23 @@ def get_shopping_inventories(shopping_list):
                  'quantity': value}
             )
         return shopping_detail
-    
+
+
 def get_detail_finalize_shopping(shopping_list):
     shopping_detail = []
     if shopping_list:
         for key, value in shopping_list.items():
             inventory = db.inventories.find_one({"_id": ObjectId(key)})
-            shopping_detail.append(
-                {'inventory_id': str(inventory['_id']),
+            shopping_detail.append({
+                'inventory_id': key,
                 'commodity_name': inventory['commodity_name'],
                 'price': inventory['price'],
                 'commodity_id': inventory['commodity_id'],
                 'repository_id': inventory['repository_id'],
                 'repository_name': inventory['repository_name'],
-                'quantity': value}
-            )
+                'quantity': value
+            })
         return shopping_detail
-        
 
 
 def add_inventory(data):
@@ -183,7 +183,16 @@ def edit_inventory(data):
 
 # =============================orders=============================
 def get_orders():
-    orders = list(db.orders.find())
+    orders = list(db.orders.find({}, {
+        "_id": 1,
+        "user_name": 1,
+        "total_price": 1,
+        "order_time": 1
+    }))
     for order in orders:
         order['_id'] = str(order['_id'])
     return orders
+
+
+def get_order_details(order_id):
+    return db.orders.find_one({"_id": ObjectId(order_id)}, {"_id": 0})

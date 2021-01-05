@@ -28,16 +28,19 @@ div.price span {
     font-size: small;
 }
 
-div.buy button {
-    background-color: greenyellow;
-    padding: 10px 20px;
-    margin-right: 20px;
-    box-shadow: rgb(3, 40, 6) 3px 3px 5px;
-}
 div.buy button img {
-    width: 15px;
+    width: 1vw;
 }
 
 div.description {
     margin-top: 30px;
+}
+
+div#main_div {
+    flex-direction: column;
+    min-width: 60%;
+}
+
+div.row {
+    margin: 10px;
 }

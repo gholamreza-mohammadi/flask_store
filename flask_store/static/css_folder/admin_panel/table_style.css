@@ -33,23 +33,29 @@ table.repositories_table {
     width: 40vw;
 }
 
-div.table_div {
-    display: table;         
-    width: auto;         
-    background-color: #eee;         
-    border: 1px solid #666666;         
-    border-spacing: 5px; /* cellspacing:poor IE support for  this */
+div.my_table_div {
+    padding: 1vw;
+    margin: 1vw auto;
+    display: table;
+    width: auto;
+    background-color: #f3f3f3;
+    border: 1px solid #666666;
+    border-radius: 10px;
 }
 
 div.table_div_row {
-    display: table-row;
+    display: flex;
     width: auto;
     clear: both;
+    background-color: #e3e3e3;
+    border: 1px solid #666666;
+    border-radius: 4px;
+    margin: 3px 0;
 }
 
 div.table_div_col {
-    float: right; /* fix for  buggy browsers */
-    display: table-column;         
-    width: 23vw;         
-    background-color: #ccc;  
+    float: right;
+    display: table-column;
+    width: 20vw;
+    padding: 0.4em 1em;
 }
