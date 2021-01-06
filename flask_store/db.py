@@ -1,7 +1,10 @@
+import json
+import pandas
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import datetime
-from flask import current_app, url_for
+from flask import url_for
+from .functions import get_categoies_list
 
 client = MongoClient('localhost', 27017)
 db = client.store
@@ -30,6 +33,26 @@ def add_product(data):
             "category": data['product_category'],
             "description": data['product_description']
         })
+
+
+def add_products(data_file):
+    data = pandas.read_excel(data_file)
+    data_list = data.to_dict("records")
+
+    if data_list:
+        with open('flask_store/static/json_folder/categories.json', encoding='utf-8') as categories_json:
+            categories_json = json.load(categories_json)
+        categoies_list = get_categoies_list(categories_json)
+        data_list = [commodity for commodity in data_list if not (
+                pandas.isna(commodity['commodity_name']) or
+                commodity['category'] not in categoies_list or
+                db.products.find_one({'commodity_name': commodity['commodity_name']})
+        )]
+        for commodity in data_list:
+            if pandas.isna(commodity['image_link']):
+                commodity['image_link'] = url_for('static', filename='assets/images/product-default.png')
+        if data_list:
+            db.products.insert_many(data_list)
 
 
 def delete_product(data):

@@ -203,6 +203,7 @@ def set_products():
         if file:
             # current_app.logger.debug(file.read())
             current_app.logger.debug(file)
+            db.add_products(file.read())
             return 'add_products'
         else:
             data = request.get_json()
