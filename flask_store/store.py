@@ -52,7 +52,6 @@ def home():
 
 @bp.route("/product/<id>", methods=["GET", "POST"])
 def detail(id):
-    current_app.logger.debug(session.get('shopping_list'))
     client = MongoClient('localhost', 27017)
     db = client.store
     commodity = db.inventories.find_one({'_id': ObjectId(id)})

@@ -45,38 +45,6 @@ def get_orders():
     if request.method == "POST":
         orders = {"column_names": ["_id", "user_name", "total_price", "order_time"],
                   'data': db.get_orders()}
-        # orders = {"column_names": ["id", "user_name", "total_price", "order_time"],
-        #           'data': [
-        #               {
-        #                   "id": "5feace5898652baae6f775d0",
-        #                   "user_name": "اکبر زمانی",
-        #                   "total_price": 920000,
-        #                   "order_time": "1399/01/05"
-        #               },
-        #               {
-        #                   "id": "5feace5898652baae6f775d1",
-        #                   "user_name": "رامین رحیمی",
-        #                   "total_price": 8764300,
-        #                   "order_time": "1399/01/04"
-        #               },
-        #               {
-        #                   "id": "5feace5898652baae6f775d2",
-        #                   "user_name": "ملیکا زارعی",
-        #                   "total_price": 3324000,
-        #                   "order_time": "1399/01/03"
-        #               },
-        #               {
-        #                   "id": "5feace5898652baae6f775d3",
-        #                   "user_name": "نیکی کریمی",
-        #                   "total_price": 1258000,
-        #                   "order_time": "1399/01/02"
-        #               }, {
-        #                   "id": "5feace5898652baae6f775d4",
-        #                   "user_name": "فریبرز عربنیا",
-        #                   "total_price": 540000,
-        #                   "order_time": "1399/01/01"
-        #               }
-        #           ]}
         return orders
     else:
         abort(404)
@@ -86,16 +54,7 @@ def get_orders():
 def get_order_details():
     if request.method == "POST":
         data = request.get_json()
-        current_app.logger.debug(data['order_id'])
         detail = db.get_order_details(data['order_id'])
-        # current_app.logger.debug(detail)
-        # return {
-        #     'user_name': "فریبرز عربنیا",
-        #     'address': 'تهران، بزرگراه شهید چمران، خیابان یمن،ميدان شهيد شهرياری، بلوار دانشجو',
-        #     'phone': "0912345678",
-        #     'resive_time': "1399/01/03",
-        #     'order_time': "1399/01/01"
-        # }
         return detail
     else:
         abort(404)
@@ -107,25 +66,12 @@ def set_inventories():
         data = request.get_json()
         if 'add_inventory' in data:
             db.add_inventory(data)
-            current_app.logger.debug('add_inventory')
-            current_app.logger.debug(data['inventory_product_id'])
-            current_app.logger.debug(data['inventory_repository_id'])
-            current_app.logger.debug(data['inventory_price'])
-            current_app.logger.debug(data['inventory_quantity'])
             return 'add_repository'
         elif 'edit_inventory' in data:
             db.edit_inventory(data)
-            current_app.logger.debug('edit_inventory')
-            current_app.logger.debug(data['inventory_id'])
-            current_app.logger.debug(data['inventory_product_id'])
-            current_app.logger.debug(data['inventory_repository_id'])
-            current_app.logger.debug(data['inventory_price'])
-            current_app.logger.debug(data['inventory_quantity'])
             return 'edit_inventory'
         elif 'delete_inventory' in data:
             db.delete_inventory(data)
-            current_app.logger.debug('delete_inventory')
-            current_app.logger.debug(data['inventory_id'])
             return 'delete_inventory'
         else:
             return 'invalid request'
@@ -150,19 +96,12 @@ def set_repositories():
         data = request.get_json()
         if 'add_repository' in data:
             db.add_repositories(data)
-            current_app.logger.debug('add_repository')
-            current_app.logger.debug(data['repository_name'])
             return 'add_repository'
         elif 'edit_repository' in data:
             db.edit_repository(data)
-            current_app.logger.debug('edit_repository')
-            current_app.logger.debug(data['repository_id'])
-            current_app.logger.debug(data['repository_name'])
             return 'edit_repository'
         elif 'delete_repository' in data:
             db.delete_repositories(data)
-            current_app.logger.debug('delete_repository')
-            current_app.logger.debug(data['repository_id'])
             return 'delete_repository'
         else:
             return 'invalid request'
@@ -201,32 +140,18 @@ def set_products():
     if request.method == "POST":
         file = request.files.get('products_file')
         if file:
-            # current_app.logger.debug(file.read())
-            current_app.logger.debug(file)
             db.add_products(file.read())
             return 'add_products'
         else:
             data = request.get_json()
             if 'delete_product' in data:
                 db.delete_product(data)
-                current_app.logger.debug('delete_product')
-                current_app.logger.debug(data['product_id'])
                 return 'delete_product'
             elif 'edit_product' in data:
-                current_app.logger.debug('edit_product')
-                current_app.logger.debug(data['product_id'])
-                current_app.logger.debug(data['product_image_link'])
-                current_app.logger.debug(data['product_name'])
-                current_app.logger.debug(data['product_category'])
                 db.edit_product(data)
                 return 'edit_product'
             elif 'add_product' in data:
                 db.add_product(data)
-                current_app.logger.debug('add_product')
-                current_app.logger.debug(data['product_image_link'])
-                current_app.logger.debug(data['product_name'])
-                current_app.logger.debug(data['product_category'])
-                current_app.logger.debug(data['product_description'])
                 return 'add_product'
             else:
                 return 'invalid request'
