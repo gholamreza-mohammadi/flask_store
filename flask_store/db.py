@@ -36,7 +36,7 @@ def add_product(data):
 
 
 def add_products(data_file):
-    data = pandas.read_excel(data_file)
+    data = pandas.read_excel(data_file,engine='openpyxl')
     data_list = data.to_dict("records")
 
     if data_list:
