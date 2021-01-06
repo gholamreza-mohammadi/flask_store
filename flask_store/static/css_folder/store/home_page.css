@@ -21,11 +21,11 @@ div.cards_container {
     overflow: auto;
 }
 
-a.card {
+a.card_product {
     text-decoration: none;
 }
 
-div.card {
+div.card_product {
     border: 2px solid #ddd;
     box-shadow: 2px 2px 5px #ccc;
     margin: 10px;
@@ -36,11 +36,11 @@ div.card {
     align-items: center;
 }
 
-div.card:hover {
+div.card_product:hover {
     cursor: pointer;
 }
 
-div.card > img {
+div.card_product > img {
     width: 150px;
     height: 150px;
 }
