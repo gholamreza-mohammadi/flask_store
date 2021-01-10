@@ -3,6 +3,7 @@ import pandas
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import datetime
+from flask import current_app
 from flask import url_for
 from .functions import get_categoies_list
 
@@ -131,20 +132,21 @@ def get_shopping_inventories(shopping_list):
     if shopping_list:
         for key, value in shopping_list.items():
             inventory = db.inventories.find_one({"_id": ObjectId(key)})
-            shopping_detail.append(
-                {'inventory_id': str(inventory['_id']),
-                 'name': inventory['commodity_name'],
-                 'price': inventory['price'],
-                 'quantity': value}
-            )
+            shopping_detail.append({
+                'inventory_id': str(inventory['_id']),
+                'name': inventory['commodity_name'],
+                'price': inventory['price'],
+                'quantity': int(value)
+            })
         return shopping_detail
 
 
-def get_detail_finalize_shopping(shopping_list):
+def finalize_shopping(shopping_list):
     shopping_detail = []
     if shopping_list:
         for key, value in shopping_list.items():
-            inventory = db.inventories.find_one({"_id": ObjectId(key)})
+            inventory = db.inventories.find_one_and_update({"_id": ObjectId(key)},
+                                                           {'$inc': {"quantity": -int(value), "metrics.orders": 1}})
             shopping_detail.append({
                 'inventory_id': key,
                 'commodity_name': inventory['commodity_name'],
@@ -152,7 +154,7 @@ def get_detail_finalize_shopping(shopping_list):
                 'commodity_id': inventory['commodity_id'],
                 'repository_id': inventory['repository_id'],
                 'repository_name': inventory['repository_name'],
-                'quantity': value
+                'quantity': int(value)
             })
         return shopping_detail
 
@@ -171,8 +173,8 @@ def add_inventory(data):
             "commodity_image_link": product['image_link'],
             "commodity_description": product['description'],
             "category": product['category'],
-            "price": data['inventory_price'],
-            "quantity": data['inventory_quantity'],
+            "price": int(data['inventory_price']),
+            "quantity": int(data['inventory_quantity']),
             "repository_id": data['inventory_repository_id'],
             "repository_name": repository['repository_name'],
             "create_time": datetime.utcnow()
@@ -196,8 +198,8 @@ def edit_inventory(data):
                 "commodity_image_link": product['image_link'],
                 "commodity_description": product['description'],
                 "category": product['category'],
-                "price": data['inventory_price'],
-                "quantity": data['inventory_quantity'],
+                "price": int(data['inventory_price']),
+                "quantity": int(data['inventory_quantity']),
                 "repository_id": data['inventory_repository_id'],
                 "repository_name": repository['repository_name'],
                 "create_time": datetime.utcnow()

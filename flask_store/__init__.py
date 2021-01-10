@@ -1,6 +1,11 @@
 import os
 
-from flask import Flask
+from flask import Flask, render_template, current_app
+
+
+def page_not_found(error):
+    current_app.logger.debug(error)
+    return render_template('404_page.html'), 404
 
 
 def create_app(test_config=None):
@@ -40,6 +45,8 @@ def create_app(test_config=None):
 
     app.register_blueprint(admin.bp)
     app.register_blueprint(store.bp)
+
+    app.register_error_handler(404, page_not_found)
 
     # # make url_for('index') == url_for('blog.index')
     # # in another app, you might define a separate main index here with
