@@ -37,13 +37,16 @@ def home():
     db = client.store
 
     for category in categories:
-        pp = list(db.inventories.find({'category': {'$regex': category}}))
+        pr_ca = list(db.inventories.aggregate([{'$match': {'category': {'$regex': category},
+                                                           'quantity': {'$gt': 0}}},
+                                            {'$sort': {"create_time": -1}},
+                                            {'$limit': 6}]))
         products = []
-        for p in pp:
-            products.append({"id": p['_id'],
-                             "image_link": p['commodity_image_link'],
-                             "commodity_name": p['commodity_name'],
-                             "price": p['price']})
+        for product in pr_ca:
+            products.append({"id": product['_id'],
+                             "image_link": product['commodity_image_link'],
+                             "commodity_name": product['commodity_name'],
+                             "price": product['price']})
         products_category.append({'category': category.split('-')[-1].strip(),
                                   'category_full': category,
                                   'commodities': products})
