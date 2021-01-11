@@ -167,7 +167,9 @@ def add_inventory(data):
     product = get_product(data['inventory_product_id'])
     repository = get_repository(data['inventory_repository_id'])
     if not exist and product and repository:
+        # num = db.inventories.find().count()
         db.inventories.insert_one({
+            # "_id": "inv-" + str(num + 1),
             "commodity_id": data['inventory_product_id'],
             "commodity_name": product['commodity_name'],
             "commodity_image_link": product['image_link'],

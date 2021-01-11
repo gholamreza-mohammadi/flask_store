@@ -48,6 +48,9 @@ div.card > img {
 div.commodity_titles_div{
     width: calc(100% - 150px);
     padding-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media (max-width: calc((10 / 8) * 420px)) {
