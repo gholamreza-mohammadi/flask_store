@@ -101,7 +101,7 @@ def cart():
     shopping_detail, shopping_list = [], session.get('shopping_list')
     if shopping_list:
         shopping_detail = db.get_shopping_inventories(shopping_list)
-    total_price = sum([int(shop['price']) * int(shop['quantity']) for shop in shopping_detail])
+    total_price = sum(shop['price'] * shop['quantity'] for shop in shopping_detail)
     return render_template("store/cart.html", products=shopping_detail, total_price=total_price)
 
 
@@ -112,8 +112,8 @@ def finalize():
     if request.method == "POST":
         client = MongoClient('localhost', 27017)
         database = client.store
-        products = db.get_detail_finalize_shopping(session.get('shopping_list'))
-        total_price = sum([int(product['price']) * int(product['quantity']) for product in products])
+        products = db.finalize_shopping(session.get('shopping_list'))
+        total_price = sum(product['price'] * product['quantity'] for product in products)
         database.orders.insert_one({
             "user_name": request.form['user_name'],
             "total_price": total_price,
