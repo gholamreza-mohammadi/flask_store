@@ -9,7 +9,7 @@ from flask import redirect
 from flask import session
 from flask import abort
 from flask import Markup
-from pymongo import MongoClient
+from pymongo import MongoClient,ASCENDING,DESCENDING
 from bson import ObjectId
 from . import db
 from .functions import categories_to_markup
@@ -41,6 +41,19 @@ def home():
                                                            'quantity': {'$gt': 0}}},
                                             {'$sort': {"create_time": -1}},
                                             {'$limit': 6}]))
+        see = []
+        del_list = []
+        for p in pr_ca:
+            commodity_id = p['commodity_id']
+            if commodity_id in see:
+                del_list.append(p)
+            else:
+                see.append(commodity_id)
+                products = list(db.inventories.find({'commodity_id': commodity_id,
+                                                     'quantity': {'$gt': 0}}).sort([("price", ASCENDING),
+                                                                                    ("create_time", DESCENDING)]))
+                pr_ca[pr_ca.index(p)] = products[0]
+        [pr_ca.remove(i) for i in del_list]
         products = []
         for product in pr_ca:
             products.append({"id": product['_id'],
