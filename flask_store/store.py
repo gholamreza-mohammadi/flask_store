@@ -37,32 +37,31 @@ def home():
     db = client.store
 
     for category in categories:
-        pr_ca = list(db.inventories.aggregate([
-            {'$match': {'category': {'$regex': category}, 'quantity': {'$gt': 0}}},
-            {'$sort': {"create_time": -1}},
+        products_inventory = db.inventories.aggregate([
+            {"$match": {"$and": [{'category': {'$regex': category}}, {"quantity": {"$gt": 0}}]}},
+            {"$sort": {"commodity_id": 1, "price": 1, "create_time": -1}},
+            {"$group": {
+                "_id": "$commodity_id",
+                "tmp_id": {"$first": "$_id"},
+                "commodity_name": {"$first": "$commodity_name"},
+                "price": {"$first": "$price"},
+                "image_link": {"$first": "$commodity_image_link"},
+                "create_time": {"$first": "$create_time"}
+            }},
+            {"$project": {
+                "_id": 0,
+                "id": "$tmp_id",
+                "commodity_name": 1,
+                "price": 1,
+                "image_link": 1,
+                "create_time": 1
+            }},
+            {"$sort": {"create_time": -1}},
             {'$limit': 6}
-        ]))
-        see, del_list = [], []
-        for p in pr_ca:
-            commodity_id = p['commodity_id']
-            if commodity_id in see:
-                del_list.append(p)
-            else:
-                see.append(commodity_id)
-                products = list(db.inventories.find({'commodity_id': commodity_id,
-                                                     'quantity': {'$gt': 0}}).sort([("price", ASCENDING),
-                                                                                    ("create_time", DESCENDING)]))
-                pr_ca[pr_ca.index(p)] = products[0]
-        [pr_ca.remove(i) for i in del_list]
-        products = []
-        for product in pr_ca:
-            products.append({"id": product['_id'],
-                             "image_link": product['commodity_image_link'],
-                             "commodity_name": product['commodity_name'],
-                             "price": product['price']})
+        ])
         products_category.append({'category': category.split('-')[-1].strip(),
                                   'category_full': category,
-                                  'commodities': products})
+                                  'commodities': products_inventory})
     return render_template("store/home_page.html", products=products_category)
 
 
