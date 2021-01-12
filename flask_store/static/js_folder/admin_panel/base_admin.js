@@ -14,28 +14,30 @@ $(function () {
             $.post("get-products", function (response, status) {
                 data_div_cleaner();
                 if (status == "success") {
-                    var header = "<h2>مدیریت کالاها</h2>";
+                    var header = '<div class="w-75 mx-auto d-flex justify-content-between">';
+                    header += "<h2>مدیریت کالاها</h2>";
                     header += "<div>";
-                    header += '<a href="" class="btn_a" id="add_products_btn">import</a> ';
-                    header += '<a href="" class="btn_a" id="add_product_btn">افزودن کالا</a>';
+                    header += '<a href="" class="btn btn-success" id="add_products_btn">import</a> ';
+                    header += '<a href="" class="btn btn-success" id="add_product_btn">افزودن کالا</a>';
+                    header += "</div>";
                     header += "</div>";
 
                     var column_names = response.column_names;
-                    var table = "<table>";
-                    table += "<tr>";
+                    var table = '<table class="w-75 mx-auto table table-striped table-bordered">';
+                    table += '<tr class="table-dark">';
                     table += "<th>" + "تصویر" + "</th>";
                     table += "<th>" + "نام کالا" + "</th>";
                     table += "<th>" + "دسته بندی" + "</th>";
-                    table += "<th>" + "ویرایش / حذف" + "</th>";
+                    table += '<th class="text-center">' + "ویرایش / حذف" + "</th>";
                     table += "</tr>";
 
                     var products_obj = {};
                     response.data.forEach(function (element) {
                         table += "<tr>";
-                        table += "<td><a href=" + element[column_names[1]] + " target='_blank'>link</a></td>";
+                        table += '<td class="text-center"><a href=' + element[column_names[1]] + " target='_blank'>link</a></td>";
                         table += "<td>" + element[column_names[2]] + "</td>";
                         table += "<td>" + element[column_names[3]] + "</td>";
-                        table += '<td><a href="" class="edit_product" id="edit_product_' + element[column_names[0]] + '">ویرایش</a> ';
+                        table += '<td class="text-center"><a href="" class="edit_product btn btn-secondary" id="edit_product_' + element[column_names[0]] + '">ویرایش</a> ';
                         products_obj['edit_product_' + element[column_names[0]]] = {
                             'id': element[column_names[0]],
                             'image_link': element[column_names[1]],
@@ -44,7 +46,7 @@ $(function () {
                             'description': element[column_names[4]]
                         };
 
-                        table += '<a href="" class="delete_product" id="delete_product_' + element[column_names[0]] + '">حذف</a></td>';
+                        table += '<a href="" class="delete_product btn btn-danger" id="delete_product_' + element[column_names[0]] + '">حذف</a></td>';
                         products_obj['delete_product_' + element[column_names[0]]] = element[column_names[0]];
                         table += "</tr>";
                     });
@@ -71,7 +73,7 @@ $(function () {
                                 popup += '<input type="text" class="product_image_link" id="product_image_link" name="product_image_link"><br>';
                                 popup += "<h4>توضیحات کالا:</h4>";
                                 popup += '<textarea id="product_description" name="product_description" rows="5" wrap="soft"></textarea><br>';
-                                popup += '<div class="container"><a href="" class="btn_a" id="save_product_btn">ذخیره</a></div>';
+                                popup += '<div class="container"><a href="" class="btn btn-success" id="save_product_btn">ذخیره</a></div>';
                                 popup += "</div>";
 
                                 $("div#popup_div").append(popup);
@@ -110,7 +112,7 @@ $(function () {
                         popup += "<h4>انتخاب فایل:</h4>";
                         popup += '<form method="POST" enctype="multipart/form-data" id="fileUploadForm">';
                         popup += '<div dir="ltr"><input dir="ltr" id="products_file" name="products_file" type="file"></div>';
-                        popup += '<div class="container"><button type="submit">آپلود و ذخیره‌سازی جدول</button></div></form>';
+                        popup += '<div class="container"><button type="submit" class="btn btn-success">آپلود و ذخیره‌سازی جدول</button></div></form>';
                         popup += "</div>";
 
                         $("div#popup_div").append(popup);
@@ -156,7 +158,7 @@ $(function () {
                                 popup += '<input type="text" class="product_image_link" id="edit_product_image_link" name="edit_product_image_link" value="' + product_obj.image_link + '"><br>';
                                 popup += "<h4>توضیحات کالا:</h4>";
                                 popup += '<textarea id="edit_product_description" name="edit_product_description" rows="5" wrap="soft">' + product_obj.description + '</textarea><br>';
-                                popup += '<div class="container"><a href="" class="btn_a" id="save_edited_product_btn">ذخیره</a></div>';
+                                popup += '<div class="container"><a href="" class="btn btn-success" id="save_edited_product_btn">ذخیره</a></div>';
                                 popup += "</div>";
 
                                 $("div#popup_div").append(popup);
@@ -216,28 +218,28 @@ $(function () {
             $.post("get-repository", function (response, status) {
                 data_div_cleaner();
                 if (status == "success") {
-                    var header = "<h2>مدیریت انبارها</h2>";
-                    header += "<div>";
-                    header += '<a href="" class="btn_a" id="add_repository_btn">افزودن انبار</a> ';
+                    var header = '<div class="w-50 mx-auto d-flex justify-content-between">';
+                    header += "<h2>مدیریت انبارها</h2>";
+                    header += '<div><a href="" class="btn btn-success" id="add_repository_btn">افزودن انبار</a></div>';
                     header += "</div>";
 
                     var column_names = response.column_names;
-                    var table = '<table class="repositories_table">';
-                    table += "<tr>";
+                    var table = '<table class="w-50 mx-auto table table-striped table-bordered">';
+                    table += '<tr class="table-dark">';
                     table += "<th>" + "نام انبار" + "</th>";
-                    table += "<th>" + "ویرایش / حذف" + "</th>";
+                    table += '<th class="text-center">' + "ویرایش / حذف" + "</th>";
                     table += "</tr>";
 
                     var repositories_obj = {};
                     response.data.forEach(function (element) {
                         table += "<tr>";
                         table += "<td>" + element[column_names[1]] + "</td>";
-                        table += '<td><a href="" class="edit_repository" id="edit_repository_' + element[column_names[0]] + '">ویرایش</a> ';
+                        table += '<td class="text-center"><a href="" class="edit_repository btn btn-secondary" id="edit_repository_' + element[column_names[0]] + '">ویرایش</a> ';
                         repositories_obj['edit_repository_' + element[column_names[0]]] = {
                             'id': element[column_names[0]],
                             'name': element[column_names[1]]
                         };
-                        table += '<a href="" class="delete_repository" id="delete_repository_' + element[column_names[0]] + '">حذف</a></td>';
+                        table += '<a href="" class="delete_repository btn btn-danger" id="delete_repository_' + element[column_names[0]] + '">حذف</a></td>';
                         repositories_obj['delete_repository_' + element[column_names[0]]] = element[column_names[0]];
                         table += "</tr>";
                     });
@@ -252,7 +254,7 @@ $(function () {
                         popup += "<h2>افزودن / ویرایش انبار:</h2>";
                         popup += "<h4>نام انبار:</h4>";
                         popup += '<input type="text" id="repository_name" name="repository_name"><br>';
-                        popup += '<div class="container"><a href="" class="btn_a" id="save_repository_btn">ذخیره</a></div>';
+                        popup += '<div class="container"><a href="" class="btn btn-success" id="save_repository_btn">ذخیره</a></div>';
                         popup += "</div>";
 
                         $("div#popup_div").append(popup);
@@ -282,7 +284,7 @@ $(function () {
                         popup += "<h2>افزودن / ویرایش انبار:</h2>";
                         popup += "<h4>نام انبار:</h4>";
                         popup += '<input type="text" id="edit_repository_name" name="edit_repository_name" value="' + repository_obj.name + '"><br>';
-                        popup += '<div class="container"><a href="" class="btn_a" id="save_repository_btn">ذخیره</a></div>';
+                        popup += '<div class="container"><a href="" class="btn btn-success" id="save_repository_btn">ذخیره</a></div>';
                         popup += "</div>";
 
                         $("div#popup_div").append(popup);
@@ -333,19 +335,21 @@ $(function () {
             $.post("get-inventory", function (response, status) {
                 data_div_cleaner();
                 if (status == "success") {
-                    var header = "<h2>مدیریت موجودی و قیمت‌ها</h2>";
+                    var header = '<div class="w-75 mx-auto d-flex justify-content-between">';
+                    header += "<h2>مدیریت موجودی و قیمت‌ها</h2>";
                     header += "<div>";
-                    header += '<a href="" class="btn_a" id="add_inventory_btn">افزودن موجودی</a> ';
+                    header += '<a href="" class="btn btn-success" id="add_inventory_btn">افزودن موجودی</a> ';
+                    header += "</div>";
                     header += "</div>";
 
                     var column_names = response.column_names;
-                    var table = '<table>';
-                    table += "<tr>";
+                    var table = '<table class="w-75 mx-auto table table-striped table-bordered">';
+                    table += '<tr class="table-dark">';
                     table += "<th>" + "انبار" + "</th>";
                     table += "<th>" + "کالا" + "</th>";
                     table += "<th>" + "قیمت" + "</th>";
                     table += "<th>" + "موجودی" + "</th>";
-                    table += "<th>" + "ویرایش / حذف" + "</th>";
+                    table += '<th class="text-center">' + "ویرایش / حذف" + "</th>";
                     table += "</tr>";
 
                     var inventories_obj = {};
@@ -355,7 +359,7 @@ $(function () {
                         table += "<td>" + element[column_names[2]] + "</td>";
                         table += "<td>" + element[column_names[3]] + "</td>";
                         table += "<td>" + element[column_names[4]] + "</td>";
-                        table += '<td><a href="" class="edit_inventory" id="edit_inventory_' + element[column_names[0]] + '">ویرایش</a> ';
+                        table += '<td class="text-center"><a href="" class="edit_inventory btn btn-secondary" id="edit_inventory_' + element[column_names[0]] + '">ویرایش</a> ';
                         inventories_obj['edit_inventory_' + element[column_names[0]]] = {
                             'id': element[column_names[0]],
                             'repository': element[column_names[1]],
@@ -363,7 +367,7 @@ $(function () {
                             'price': element[column_names[3]],
                             'quantity': element[column_names[4]]
                         };
-                        table += '<a href="" class="delete_inventory" id="delete_inventory_' + element[column_names[0]] + '">حذف</a></td>';
+                        table += '<a href="" class="delete_inventory  btn btn-danger" id="delete_inventory_' + element[column_names[0]] + '">حذف</a></td>';
                         inventories_obj['delete_inventory_' + element[column_names[0]]] = element[column_names[0]];
                         table += "</tr>";
                     });
@@ -400,7 +404,7 @@ $(function () {
                                         popup += '<input type="number" class="input_number" id="inventory_price" name="inventory_price" min="0"><br>';
                                         popup += "<h4>موجودی:</h4>";
                                         popup += '<input type="number" class="input_number" id="inventory_quantity" name="inventory_quantity" min="0"><br>';
-                                        popup += '<div class="container"><a href="" class="btn_a" id="save_inventory_btn">ذخیره</a></div>';
+                                        popup += '<div class="container"><a href="" class="btn btn-success" id="save_inventory_btn">ذخیره</a></div>';
                                         popup += "</div>";
 
                                         $("div#popup_div").append(popup);
@@ -468,7 +472,7 @@ $(function () {
                                         popup += '<input type="number" class="input_number" id="inventory_price" name="inventory_price" min="0" value="' + inventory_obj.price + '"><br>';
                                         popup += "<h4>موجودی:</h4>";
                                         popup += '<input type="number" class="input_number" id="inventory_quantity" name="inventory_quantity" min="0" value="' + inventory_obj.quantity + '"><br>';
-                                        popup += '<div class="container"><a href="" class="btn_a" id="save_inventory_btn">ذخیره</a></div>';
+                                        popup += '<div class="container"><a href="" class="btn btn-success" id="save_inventory_btn">ذخیره</a></div>';
                                         popup += "</div>";
 
                                         $("div#popup_div").append(popup);
@@ -528,15 +532,20 @@ $(function () {
         $.post("get-order", function (response, status) {
             data_div_cleaner();
             if (status == "success") {
-                var header = "<h2>مدیریت سفارش‌ها</h2>";
+                var header = '<div class="w-75 mx-auto d-flex justify-content-between">';
+                header += "<h2>مدیریت سفارش‌ها</h2>";
+                header += "<div>";
+                header += '<p> </p> ';
+                header += "</div>";
+                header += "</div>";
 
                 var column_names = response.column_names;
-                var table = '<table>';
-                table += "<tr>";
+                var table = '<table class="w-75 mx-auto table table-striped table-bordered">';
+                table += '<tr class="table-dark">';
                 table += "<th>" + "نام کاربر" + "</th>";
                 table += "<th>" + "مجموع مبلغ" + "</th>";
                 table += "<th>" + "زمان ثبت سفارش" + "</th>";
-                table += "<th>" + " " + "</th>";
+                table += '<th class="text-center">' + " " + "</th>";
                 table += "</tr>";
 
                 var orders_obj = {};
@@ -546,7 +555,7 @@ $(function () {
                     table += "<td>" + element[column_names[2]] + "</td>";
                     table += "<td>" + element[column_names[3]] + "</td>";
 
-                    table += '<td><a href="" class="order_detail" id="order_detail_' + element[column_names[0]] + '">بررسی سفارش</a></td>';
+                    table += '<td class="text-center"><a href="" class="order_detail btn btn-secondary" id="order_detail_' + element[column_names[0]] + '">بررسی سفارش</a></td>';
                     orders_obj['order_detail_' + element[column_names[0]]] = {
                         'id': element[column_names[0]]
                     };
@@ -592,8 +601,8 @@ $(function () {
                                     popup += '<div class="table_div_col">' + data.order_time + '</div>';
                                 popup += '</div>';
                             popup += '</div>';
-                            popup += "<table>";
-                                popup += "<tr>";
+                            popup += '<table class="table table-striped">';
+                                popup += '<tr class="table-dark">';
                                     popup += "<th>" + "کالا" + "</th>";
                                     popup += "<th>" + "قیمت" + "</th>";
                                     popup += "<th>" + "انبار" + "</th>";
@@ -608,7 +617,7 @@ $(function () {
                                     popup += "</tr>";
                                 })
                             popup += "</table>";
-                            popup += '<button id="close_btn">بستن</button>';
+                            popup += '<button id="close_btn" class="btn btn-secondary">بستن</button>';
                         popup += "</div>";
 
                         $("div#popup_div").append(popup);

@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/store.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css_folder/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css_folder/admin_panel/base_admin.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css_folder/admin_panel/table_style.css') }}">
 
     <title>پنل مدیریت فروشگاه</title>
 </head>
-<body>
-<div class="head">
+<body class="w-75 mx-auto my-5">
+<div class="d-flex justify-content-around">
     <h2>پنل مدیریت فروشگاه</h2>
     <div class="menu">
-        <a href="" id="product">کالاها</a>
-        <a href="" id="repository">انبار ها</a>
-        <a href="" id="inventory">موجودی و قیمت</a>
-        <a href="" id="order">سفارش ها</a>
+        <a href="" id="product" class="btn btn-outline-primary" role="button">کالاها</a>
+        <a href="" id="repository" class="btn btn-outline-primary" role="button">انبار ها</a>
+        <a href="" id="inventory" class="btn btn-outline-primary" role="button">موجودی و قیمت</a>
+        <a href="" id="order" class="btn btn-outline-primary" role="button">سفارش ها</a>
     </div>
-    <a href="{{ url_for('home') }}" class="back">بازگشت به سایت</a>
+    <a href="{{ url_for('home') }}" class="btn btn-primary">بازگشت به سایت</a>
 </div>
 <hr>
 
 <div id="header_div"></div>
-<div id="table_div"></div>
+<div id="table_div" class="table-responsive"></div>
 <div id="popup_div"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
         integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="

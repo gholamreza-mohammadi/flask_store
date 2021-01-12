@@ -1,71 +1,3 @@
-body {
-    font-size: 1em;
-    direction: rtl;
-}
-
-div.head {
-    display: flex;
-    justify-content: space-around;
-    width: fit-content;
-    margin: auto;
-}
-
-div.head > * {
-    margin-top: 20px;
-    margin-left: 30px;
-}
-
-div.menu {
-    display: flex;
-    align-items: center;
-}
-
-div.menu > a {
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 2px 2px 3px #999;
-    padding: 5px 10px;
-    margin: 0 1px;
-    text-decoration: none;
-    display: inline-block;
-    height: 2em;
-    line-height: 2em;
-}
-
-a.back {
-    text-decoration: none;
-    margin-top: 30px;
-}
-
-div#table_div {
-    margin: 20px auto 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-div#header_div {
-    margin: 20px auto 0 auto;
-    width: 90vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-}
-
-a.btn_a {
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 2px 2px 3px #999;
-    background-color: #008040;
-    padding: 5px 20px;
-    margin: 0 20px;
-    text-decoration: none;
-    color: aliceblue;
-    display: inline-block;
-    height: 2em;
-    line-height: 2em;
-}
-
 div.popup {
     width: 32vw;
     background-color: #fff;
@@ -118,4 +50,35 @@ div.order_div > table {
 div.order_div > button {
     margin: 10px 45%;
     width: 10%;
+}
+
+table.repositories_table {
+    width: 40vw;
+}
+
+div.my_table_div {
+    padding: 1vw;
+    margin: 1vw auto;
+    display: table;
+    width: auto;
+    background-color: #f3f3f3;
+    border: 1px solid #666666;
+    border-radius: 10px;
+}
+
+div.table_div_row {
+    display: flex;
+    width: auto;
+    clear: both;
+    background-color: #e3e3e3;
+    border: 1px solid #666666;
+    border-radius: 4px;
+    margin: 3px 0;
+}
+
+div.table_div_col {
+    float: right;
+    display: table-column;
+    width: 20vw;
+    padding: 0.4em 1em;
 }
