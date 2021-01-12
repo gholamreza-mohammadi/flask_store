@@ -37,10 +37,11 @@ def home():
     db = client.store
 
     for category in categories:
-        pr_ca = list(db.inventories.aggregate([{'$match': {'category': {'$regex': category},
-                                                           'quantity': {'$gt': 0}}},
-                                            {'$sort': {"create_time": -1}},
-                                            {'$limit': 6}]))
+        pr_ca = list(db.inventories.aggregate([
+            {'$match': {'category': {'$regex': category}, 'quantity': {'$gt': 0}}},
+            {'$sort': {"create_time": -1}},
+            {'$limit': 6}
+        ]))
         products = []
         for product in pr_ca:
             products.append({"id": product['_id'],
@@ -81,19 +82,40 @@ def category(category_name):
     client = MongoClient('localhost', 27017)
     db = client.store
 
-    products_inventory_list = list(db.inventories.find({'category': {'$regex': category_name}}))
-    products = []
-
-    for product_inventory in products_inventory_list:
-        products.append({"id": product_inventory['_id'],
-                         "image_link": product_inventory['commodity_image_link'],
-                         "commodity_name": product_inventory['commodity_name'],
-                         "price": product_inventory['price']})
+    # products_inventory = db.inventories.find({'category': {'$regex': category_name}})
+    products_inventory = db.inventories.aggregate([
+        {"$match": {"$and": [{'category': {'$regex': category_name}}, {"quantity": {"$gt": 0}}]}},
+        {"$sort": {"commodity_id": 1, "price": 1, "create_time": -1}},
+        {"$group": {
+            "_id": "$commodity_id",
+            "tmp_id": {"$first": "$_id"},
+            "commodity_name": {"$first": "$commodity_name"},
+            "price": {"$first": "$price"},
+            "image_link": {"$first": "$commodity_image_link"},
+            "create_time": {"$first": "$create_time"}
+        }},
+        {"$project": {
+            "_id": 0,
+            "id": "$tmp_id",
+            "commodity_name": 1,
+            "price": 1,
+            "image_link": 1,
+            "create_time": 1
+        }},
+        {"$sort": {"create_time": -1}}
+    ])
+    # products = []
+    #
+    # for product_inventory in products_inventory:
+    #     products.append({"id": product_inventory['_id'],
+    #                      "image_link": product_inventory['commodity_image_link'],
+    #                      "commodity_name": product_inventory['commodity_name'],
+    #                      "price": product_inventory['price']})
 
     return render_template("store/category_page.html",
                            tree=Markup(markup),
-                           category_name=category_name.split('-')[-1],
-                           products=products)
+                           category_name=category_name.split('-')[-1].strip(),
+                           products=products_inventory)
 
 
 @bp.route("/cart")
@@ -118,7 +140,7 @@ def finalize():
             "user_name": request.form['user_name'],
             "total_price": total_price,
             "order_time": datetime.now(),
-            "resive_time":  datetime.strptime(request.form['resive_time'], '%Y-%m-%d'),
+            "resive_time": datetime.strptime(request.form['resive_time'], '%Y-%m-%d'),
             "address": request.form['address'],
             "phone": request.form['phone'],
             "products": products
