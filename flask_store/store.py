@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timedelta
+import pytz
 from flask import Blueprint
 from flask import request
 from flask import render_template
@@ -142,8 +143,9 @@ def finalize():
         database.orders.insert_one({
             "user_name": request.form['user_name'],
             "total_price": total_price,
-            "order_time": datetime.now(),
-            "resive_time": datetime.strptime(request.form['resive_time'], '%Y-%m-%d'),
+            "order_time": datetime.now().replace(tzinfo=pytz.UTC),
+            "resive_time": datetime.strptime(request.form['resive_time'], '%Y-%m-%d').replace(
+                tzinfo=pytz.UTC),
             "address": request.form['address'],
             "phone": request.form['phone'],
             "products": products
