@@ -10,10 +10,6 @@ main a {
     color: rgb(0, 120, 80);
 }
 
-a.product_category {
-    color: rgb(126, 0, 94);
-}
-
 .card_product {
     position: relative;
 }

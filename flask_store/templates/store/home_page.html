@@ -12,7 +12,8 @@
         product["category"] }}</a>
     <div class="cards_container">
         {% for commodity in product["commodities"] %}
-        <a class="card_product" href="{{ url_for('store.detail', id=commodity['id']) }}">
+        <a class="card_product"
+           href="{{ url_for('store.detail', id=commodity['id'], product_name=commodity['commodity_name']) }}">
             <div class="card_product">
                 <img src='{{ commodity["image_link"] }}'/>
                 <div class="commodity_titles_div">

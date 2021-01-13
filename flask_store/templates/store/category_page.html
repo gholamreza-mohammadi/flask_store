@@ -11,7 +11,8 @@
     <h2> {{ category_name }} </h2>
     <div class="cards_container">
         {% for product in products %}
-        <a class="card_product" href="{{ url_for('store.detail', id=product['id']) }}">
+        <a class="card_product"
+           href="{{ url_for('store.detail', id=product['id'], product_name=product['commodity_name']) }}">
             <div class="card_product">
                 <img src='{{ product["image_link"] }}'/>
                 <div class="commodity_titles_div">

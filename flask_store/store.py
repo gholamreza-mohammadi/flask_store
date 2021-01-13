@@ -66,8 +66,8 @@ def home():
     return render_template("store/home_page.html", products=products_category)
 
 
-@bp.route("/product/<id>", methods=["GET", "POST"])
-def detail(id):
+@bp.route("/product/<id>/<product_name>", methods=["GET", "POST"])
+def detail(id, product_name):
     client = MongoClient('localhost', 27017)
     db = client.store
     commodity = db.inventories.find_one({'_id': ObjectId(id)})
