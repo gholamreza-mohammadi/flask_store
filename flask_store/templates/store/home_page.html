@@ -5,24 +5,28 @@
 {% endblock %}
 
 {% block main %}
-    {% for product in products %}
-    {% if product["commodities"] %}
-    <div class="product_category_and_cards_container">
-        <a href="{{ url_for('store.category', category_name=product['category_full']) }}" class="product_category">{{ product["category"] }}</a>
-        <div class="cards_container">
-            {% for commodity in product["commodities"] %}
-            <a class="card_product" href="{{ url_for('store.detail', id=commodity['id']) }}">
-                <div class="card_product">
-                    <img src='{{ commodity["image_link"] }}'/>
-                    <div class="commodity_titles_div">
-                        <h5>{{ commodity["commodity_name"] }}</h5>
-                        <h5>{{ commodity["price"] }} تومان</h5>
-                    </div>
+{% for product in products %}
+{% if product["commodities"] %}
+<div class="product_category_and_cards_container">
+    <a href="{{ url_for('store.category', category_name=product['category_full']) }}" class="product_category">{{
+        product["category"] }}</a>
+    <div class="cards_container">
+        {% for commodity in product["commodities"] %}
+        <a class="card_product" href="{{ url_for('store.detail', id=commodity['id']) }}">
+            <div class="card_product">
+                <img src='{{ commodity["image_link"] }}'/>
+                <div class="commodity_titles_div">
+                    <h5>{{ ' '.join(commodity["commodity_name"].split()[:3]) + ' ...' }}</h5>
+                    <h5>{{ commodity["price"] }} تومان</h5>
                 </div>
-            </a>
-            {% endfor %}
-        </div>
+                <div class="my_overlay">
+                    <div class="my_text">{{ commodity["commodity_name"] }}</div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
     </div>
-    {% endif %}
-    {% endfor %}
+</div>
+{% endif %}
+{% endfor %}
 {% endblock %}

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block main %}
-<div class="right_div"> {{ tree }} </div>
+<div class="right_div">{{ tree }}</div>
 <div class="left_div">
     <h2> {{ category_name }} </h2>
     <div class="cards_container">
@@ -15,8 +15,11 @@
             <div class="card_product">
                 <img src='{{ product["image_link"] }}'/>
                 <div class="commodity_titles_div">
-                    <h5>{{ product["commodity_name"] }}</h5>
+                    <h5>{{ ' '.join(product["commodity_name"].split()[:3]) + ' ...' }}</h5>
                     <h5>{{ product["price"] }} تومان</h5>
+                </div>
+                <div class="my_overlay">
+                    <div class="my_text">{{ product["commodity_name"] }}</div>
                 </div>
             </div>
         </a>
