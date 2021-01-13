@@ -76,7 +76,7 @@ def detail(id, product_name):
             session['shopping_list'] = {}
         session['shopping_list'][id] = request.form["quantity"]
         session.modified = True
-        return redirect(url_for('store.detail', id=id))
+        return redirect(url_for('store.detail', id=id, product_name=product_name))
     else:
         qty = 0
         if 'shopping_list' in session and id in session['shopping_list']:
