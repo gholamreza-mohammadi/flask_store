@@ -1,32 +1,34 @@
 {% extends "store/base_store.html" %}
 
 {% block style_block %}
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css_folder/store/detail_page.css') }}"/>
 {% endblock %}
 
 {% block main %}
 <div>
-    <div class="head">
+    <div class="d-flex">
         <div class="img">
             <img class="p_icon" src="{{commodity['commodity_image_link']}}" alt="">
         </div>
-        <div class="detail">
-            <h1 class="p_name">{{ commodity["commodity_name"] }}</h1>
-            <a href="{{ url_for('store.category', category_name=commodity['category']) }}" class="p_category">{{
+        <div class="w-50 px-4 ms-5">
+            <h2 class="mb-3">{{ commodity["commodity_name"] }}</h2>
+            <a href="{{ url_for('store.category', category_name=commodity['category']) }}" class="p_category text-decoration-none text-info h5 text-nowrap">{{
                 commodity["category"] }}</a>
-            <div class="price"><h2>{{ commodity["price"] }}<span class=""> تومان </span></h2></div>
-            <div class="buy">
+            <div class="my-3"><h2>{{ commodity["price"] }}<span class="fs-5"> تومان </span></h2></div>
+            <div class="my-4">
                 <form method="POST">
                     <input type="number" id="quantity" name="quantity" min="1" max="{{ commodity['quantity'] }}"
                            value="{{ qty }}">
-                    <button type="submit" class="btn btn-success shadow"> افزودن به سبد خرید
-                        <img src="{{ url_for('static', filename='assets/images/add_icon.png') }}" alt="">
+                    <button type="submit" class="btn btn-success shadow mx-2"> افزودن به سبد خرید
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0z"/>
+                        </svg>
+                        
                     </button>
                 </form>
             </div>
         </div>
     </div>
-    <div class="description">{{ commodity['commodity_description'] }}</div>
+    <div class="mt-3">{{ commodity['commodity_description'] }}</div>
 </div>
 {% endblock %}
